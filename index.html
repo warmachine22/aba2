@@ -18,11 +18,6 @@
       padding: 0;
     }
 
-    /* Global Reset / Box Sizing */
-    * {
-      box-sizing: border-box;
-    }
-
     /* Header with logo + title */
     .app-header {
       display: flex;
@@ -44,7 +39,7 @@
 
     /* Main container */
     .container {
-      max-width: 800px; /* increased for a more spacious look */
+      max-width: 800px; 
       margin: 1rem auto;
       padding: 1rem;
       background: #fff;
@@ -52,7 +47,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
-    /* Child Name Header and top section arrangement */
+    /* Child Name Header */
     .child-header {
       display: flex;
       align-items: center;
@@ -112,36 +107,56 @@
       content: "LOCK";
     }
 
-    /* Top Section: structuring the 3 dropdowns nicely */
+    /***************************************************************************
+     * NEW: Make the top section full-width and place each dropdown row inline *
+     ***************************************************************************/
     #topSection {
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      width: 100vw;
+      background: #fff;
+      padding: 1rem 0;
       margin-bottom: 1rem;
     }
-    .dropdowns {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    /* Inner wrapper to keep the dropdowns centered if desired. 
+       Adjust "max-width" if you want them fully to the edges with no margin. */
+    #topSection .dropdowns {
+      max-width: 1200px; /* or use 100% if you truly want edge-to-edge with no margin */
+      margin: 0 auto;
+      padding: 0 1rem;
     }
+
+    /* Force each dropdown row onto a single line (label + lock + select). */
     .dropdown-row {
       display: flex;
-      flex-direction: column;
+      align-items: center;  /* vertically center them */
+      gap: 0.5rem;
+      margin-bottom: 0.5rem; /* slight spacing between rows */
     }
+    /* The sub-label container if you wish to keep it (so the label & switch remain together). */
     .dropdown-left {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0;
+      white-space: nowrap; /* keep label & switch together */
     }
-    .dropdown-title {
-      font-weight: 500;
-      color: #555;
-    }
+    /* Expand the select to fill the remaining space across the row */
     .dropdown-row select {
-      width: 100%;
+      flex: 1;
       padding: 0.4rem;
       border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 0.9rem;
     }
+    .dropdown-title {
+      font-weight: 500;
+      color: #555;
+    }
+    /***************************************************************************/
 
     /* Instructions / SD & Notes */
     .instructions {
@@ -156,7 +171,7 @@
     }
     /* Combined Description (green background block) */
     .combined-description {
-      background-color: #2e7d32; /* a slightly darker green */
+      background-color: #2e7d32;
       color: #fff;
       padding: 10px;
       border-radius: 5px;
@@ -231,14 +246,14 @@
 
     /* Color-coded for each type */
     label.incorrect {
-      background-color: #ffebee; /* lighten the red tone */
+      background-color: #ffebee;
     }
     label.independent {
-      background-color: #e8f5e9; /* lighten the green tone */
+      background-color: #e8f5e9;
     }
     label.verbal, label.prompted, label.modeling,
     label.gestural, label.partialPhysical, label.fullPhysical {
-      background-color: #fffde7; /* lighten the yellow tone */
+      background-color: #fffde7;
     }
 
     /* Prior Results */
@@ -261,7 +276,6 @@
       border-radius: 4px;
       font-size: 0.9rem;
     }
-    /* classes for prior results background */
     .verbal, .prompted, .modeling, .gestural, .partial-physical, .full-physical {
       background-color: #fffde7;
     }
@@ -281,7 +295,7 @@
       margin-right: -50vw;
       width: 100vw;
       background: #f3f3f3;
-      padding: 2rem 0; /* more generous padding */
+      padding: 2rem 0;
     }
     #dataManagementSection hr {
       margin-bottom: 1rem;
@@ -495,96 +509,96 @@
       </div>
       <select id="childNameSelect"></select>
     </div>
+  </div>
 
-    <!-- Top Section: Dropdowns for Content Area, Program, Target with Lock Toggles -->
-    <div id="topSection">
-      <div class="dropdowns">
-        <!-- Content Area -->
-        <div class="dropdown-row">
-          <div class="dropdown-left">
-            <label for="contentAreaSelect" class="dropdown-title">Content Area</label>
-            <label class="switch">
-              <input type="checkbox" id="lockContentArea">
-              <span class="slider"></span>
-            </label>
-          </div>
-          <select id="contentAreaSelect"></select>
+  <!-- Top Section (Full Width) -->
+  <div id="topSection">
+    <div class="dropdowns">
+      <!-- Content Area -->
+      <div class="dropdown-row">
+        <div class="dropdown-left">
+          <label for="contentAreaSelect" class="dropdown-title">Content Area</label>
+          <label class="switch">
+            <input type="checkbox" id="lockContentArea">
+            <span class="slider"></span>
+          </label>
         </div>
+        <select id="contentAreaSelect"></select>
+      </div>
 
-        <!-- Program -->
-        <div class="dropdown-row">
-          <div class="dropdown-left">
-            <label for="programSelect" class="dropdown-title">Program</label>
-            <label class="switch">
-              <input type="checkbox" id="lockProgram">
-              <span class="slider"></span>
-            </label>
-          </div>
-          <select id="programSelect"></select>
+      <!-- Program -->
+      <div class="dropdown-row">
+        <div class="dropdown-left">
+          <label for="programSelect" class="dropdown-title">Program</label>
+          <label class="switch">
+            <input type="checkbox" id="lockProgram">
+            <span class="slider"></span>
+          </label>
         </div>
+        <select id="programSelect"></select>
+      </div>
 
-        <!-- Target -->
-        <div class="dropdown-row">
-          <div class="dropdown-left">
-            <label for="targetSelect" class="dropdown-title">Target</label>
-            <label class="switch">
-              <input type="checkbox" id="lockTarget">
-              <span class="slider"></span>
-            </label>
-          </div>
-          <select id="targetSelect"></select>
+      <!-- Target -->
+      <div class="dropdown-row">
+        <div class="dropdown-left">
+          <label for="targetSelect" class="dropdown-title">Target</label>
+          <label class="switch">
+            <input type="checkbox" id="lockTarget">
+            <span class="slider"></span>
+          </label>
         </div>
+        <select id="targetSelect"></select>
+      </div>
 
-        <!-- Instructions and SD/Notes -->
-        <div class="instructions">
-          <p id="selectedDescription"></p>
-          <div class="desc-buttons">
-            <button id="toggleDetailsBtn">Hide Details</button>
-            <button id="selectRandomBtn">Select Random</button>
-          </div>
-          <label for="sdInput">SD (Instruction)</label>
-          <textarea id="sdInput" rows="2" placeholder='"Do the puzzle" while placing the piece...'></textarea>
-          <label for="notesArea">Note</label>
-          <textarea id="notesArea" rows="2" placeholder="Notes: Work Harder, Work Harder..."></textarea>
+      <!-- Instructions and SD/Notes -->
+      <div class="instructions">
+        <p id="selectedDescription"></p>
+        <div class="desc-buttons">
+          <button id="toggleDetailsBtn">Hide Details</button>
+          <button id="selectRandomBtn">Select Random</button>
         </div>
+        <label for="sdInput">SD (Instruction)</label>
+        <textarea id="sdInput" rows="2" placeholder='"Do the puzzle" while placing the piece...'></textarea>
+        <label for="notesArea">Note</label>
+        <textarea id="notesArea" rows="2" placeholder="Notes: Work Harder, Work Harder..."></textarea>
+      </div>
 
-        <!-- Trial Results -->
-        <div class="trial-results">
-          <div class="column">
-            <label class="incorrect">
-              <input type="radio" name="trialResult" value="incorrect" /> Incorrect
-            </label>
-            <label class="verbal">
-              <input type="radio" name="trialResult" value="verbal" /> Verbal
-            </label>
-            <label class="prompted">
-              <input type="radio" name="trialResult" value="prompted" /> Prompted
-            </label>
-            <label class="modeling">
-              <input type="radio" name="trialResult" value="modeling" /> Modeling
-            </label>
-          </div>
-          <div class="column">
-            <label class="independent">
-              <input type="radio" name="trialResult" value="independent" /> Independent
-            </label>
-            <label class="gestural">
-              <input type="radio" name="trialResult" value="gestural" /> Gestural
-            </label>
-            <label class="partialPhysical">
-              <input type="radio" name="trialResult" value="partialPhysical" /> Partial Physical
-            </label>
-            <label class="fullPhysical">
-              <input type="radio" name="trialResult" value="fullPhysical" /> Full Physical
-            </label>
-          </div>
+      <!-- Trial Results -->
+      <div class="trial-results">
+        <div class="column">
+          <label class="incorrect">
+            <input type="radio" name="trialResult" value="incorrect" /> Incorrect
+          </label>
+          <label class="verbal">
+            <input type="radio" name="trialResult" value="verbal" /> Verbal
+          </label>
+          <label class="prompted">
+            <input type="radio" name="trialResult" value="prompted" /> Prompted
+          </label>
+          <label class="modeling">
+            <input type="radio" name="trialResult" value="modeling" /> Modeling
+          </label>
         </div>
+        <div class="column">
+          <label class="independent">
+            <input type="radio" name="trialResult" value="independent" /> Independent
+          </label>
+          <label class="gestural">
+            <input type="radio" name="trialResult" value="gestural" /> Gestural
+          </label>
+          <label class="partialPhysical">
+            <input type="radio" name="trialResult" value="partialPhysical" /> Partial Physical
+          </label>
+          <label class="fullPhysical">
+            <input type="radio" name="trialResult" value="fullPhysical" /> Full Physical
+          </label>
+        </div>
+      </div>
 
-        <!-- Prior Results -->
-        <div class="prior-results">
-          <h2>Prior Results (Current Target)</h2>
-          <ul class="prior-list" id="priorList"></ul>
-        </div>
+      <!-- Prior Results -->
+      <div class="prior-results">
+        <h2>Prior Results (Current Target)</h2>
+        <ul class="prior-list" id="priorList"></ul>
       </div>
     </div>
   </div>
@@ -661,7 +675,7 @@
   <datalist id="programList"></datalist>
   <datalist id="targetList"></datalist>
 
-  <!-- Consolidated Script Block -->
+  <!-- All scripts remain the same (unchanged functionality) -->
   <script>
     /******** Global Variables ********/
     let trialHistory = [];
@@ -743,7 +757,6 @@
     /******** Global Data Structure ********/
     let appData = loadAppData();
     if (!appData || Object.keys(appData).length === 0) {
-      // If there's no data, load default
       appData = getDefaultData();
       saveAppData();
     }
@@ -829,7 +842,6 @@
           });
       }
     }
-    /* Updated to combine all descriptive data into one block with a green background */
     function updateDescription() {
       const selectedChild = childNameSelect.value;
       const selectedArea = contentAreaSelect.value;
@@ -912,17 +924,29 @@
     updatePriorResults();
 
     /******** Randomization Functionality with Cascading Locks ********/
+    function childHasActiveRecords(childName) {
+      if (!appData[childName]) return false;
+      for (const area in appData[childName]) {
+        for (const program in appData[childName][area]) {
+          for (const target in appData[childName][area][program]) {
+            if (appData[childName][area][program][target].active) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    }
     function randomizeTrialData() {
       let rawLockChild = document.getElementById('lockChild').checked;
       let rawLockContentArea = document.getElementById('lockContentArea').checked;
       let rawLockProgram = document.getElementById('lockProgram').checked;
       let rawLockTarget = document.getElementById('lockTarget').checked;
 
-      // Determine effective locks based on the hierarchy.
       let lockChild = rawLockChild || rawLockContentArea || rawLockProgram || rawLockTarget;
       let lockContentArea = rawLockContentArea || rawLockProgram || rawLockTarget;
       let lockProgram = rawLockProgram || rawLockTarget;
-      let lockTarget = rawLockTarget; // no further cascading
+      let lockTarget = rawLockTarget;
 
       let currentChild = childNameSelect.value;
       let currentArea = contentAreaSelect.value;
@@ -1125,7 +1149,6 @@
     const simpleOriginalProgram = document.getElementById('simpleOriginalProgram');
     const simpleOriginalTarget = document.getElementById('simpleOriginalTarget');
 
-    // Datalist update functions
     function updateChildDatalist() {
       const datalist = document.getElementById('childList');
       datalist.innerHTML = "";
@@ -1233,7 +1256,6 @@
         return;
       }
 
-      // Handle existing record removal if editing
       if (mode === "edit") {
         const origChild = simpleOriginalChild.value;
         const origArea = simpleOriginalArea.value;
@@ -1252,22 +1274,17 @@
           }
         }
       }
-
-      // Build hierarchy if it doesn't exist
       if (!appData[newChild]) { appData[newChild] = {}; }
       if (!appData[newChild][newArea]) { appData[newChild][newArea] = {}; }
       if (!appData[newChild][newArea][newProg]) { appData[newChild][newArea][newProg] = {}; }
 
-      // Overwrite warning if record already exists
       if (mode === "add" && appData[newChild][newArea][newProg][newTarget]) {
         if (!confirm("Target already exists. Overwrite?")) { return; }
       }
-      // Add or replace record
       appData[newChild][newArea][newProg][newTarget] = { sd: newSD, note: newNote, active: newActive };
       closeSimpleEditModalFunc();
       buildDataTable();
 
-      // If we updated the currently selected record, refresh the UI
       if (childNameSelect.value === simpleOriginalChild.value &&
           contentAreaSelect.value === simpleOriginalArea.value &&
           programSelect.value === simpleOriginalProgram.value &&
@@ -1286,14 +1303,12 @@
       saveAppData();
     });
 
-    /******** New Button for Adding New Record ********/
     document.getElementById('addNewRecordBtn').addEventListener('click', function() {
       openSimpleEditModal({}, "add");
     });
 
     /******** Data Management: Table View ********/
     const dataTable = document.getElementById("dataTable");
-
     function buildDataTable() {
       let rows = [];
       Object.keys(appData).forEach(child => {
@@ -1315,7 +1330,6 @@
         });
       });
 
-      // Table columns
       const columns = ["Child", "Active", "Content Area", "Program", "Target", "SD", "Note", "Action"];
       let thead = "<thead><tr>";
       columns.forEach((col, index) => {
@@ -1327,10 +1341,8 @@
       });
       thead += "</tr>";
 
-      // Filter row
       thead += "<tr class='filterRow'>";
       columns.forEach((col, index) => {
-        // Skip filters for Active and Action columns
         if (col === "Active" || col === "Action") {
           thead += "<th></th>";
         } else {
@@ -1375,7 +1387,6 @@
         });
       });
 
-      // Attach filterTable() to each input's keyup
       const filterInputs = dataTable.querySelectorAll("thead tr.filterRow input");
       filterInputs.forEach(input => {
         input.addEventListener("keyup", filterTable);
@@ -1413,7 +1424,6 @@
       });
     }
 
-    // Filter function using data-col indexes
     function filterTable() {
       const filters = {};
       const inputs = dataTable.querySelectorAll("thead tr.filterRow input");
@@ -1469,13 +1479,10 @@
     const resetDataBtn = document.getElementById('resetDataBtn');
     resetDataBtn.addEventListener('click', () => {
       if (!confirm("Are you sure? All data will be deleted and replaced with the default Test Child data.")) return;
-
-      // Wipe everything and restore the minimal default
       appData = getDefaultData();
       trialHistory = [];
       saveAppData();
 
-      // Re-init the UI
       populateChildNames();
       updateContentAreas();
       updateProgramSelect();
@@ -1484,7 +1491,6 @@
       updateDescription();
       updatePriorResults();
 
-      // If table is showing, refresh it
       buildDataTable();
       alert("Data has been reset to default.");
     });
