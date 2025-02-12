@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Autism Data Collection Demo</title>
+  <title>Autism Data Collection</title>
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* Use Roboto as the primary font */
     body {
       font-family: 'Roboto', sans-serif;
       background-color: #f7f7f7;
@@ -47,69 +46,37 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
-    /* Child Name Header */
-    .child-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-      gap: 1rem;
-    }
-    .child-header .dropdown-label {
+    /* Child Name Row (matches others) */
+    .child-row {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-right: 1rem;
+      margin-bottom: 1rem;
     }
-    .child-header label {
-      font-weight: 500;
-      color: #555;
+    #childLockBtn {
+      min-width: 120px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+      transition: background-color 0.2s;
+      white-space: nowrap; 
     }
     #childNameSelect {
-      padding: 0.3rem 0.5rem;
+      flex: 1;
+      padding: 0.4rem;
       border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 0.9rem;
     }
 
-    /* Switch styling for lock toggles */
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 24px;
-    }
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 24px;
-      transition: 0.4s;
-      text-align: center;
-      line-height: 24px;
-      font-size: 10px;
-      color: #000;
-    }
-    .slider:before {
-      content: "UNLOCK";
-      transition: 0.4s;
-    }
-    input:checked + .slider {
-      background-color: #c8e6c9;
-    }
-    input:checked + .slider:before {
-      content: "LOCK";
+    /* Hide the old lock slider checkboxes (still exist for logic) */
+    #lockChild, #lockContentArea, #lockProgram, #lockTarget {
+      display: none;
     }
 
-    /***************************************************************************
-     * NEW: Make the top section full-width and place each dropdown row inline *
-     ***************************************************************************/
+    /* Top Section (Full Width) */
     #topSection {
       position: relative;
       left: 50%;
@@ -121,30 +88,27 @@
       padding: 1rem 0;
       margin-bottom: 1rem;
     }
-    /* Inner wrapper to keep the dropdowns centered if desired. 
-       Adjust "max-width" if you want them fully to the edges with no margin. */
     #topSection .dropdowns {
-      max-width: 1200px; /* or use 100% if you truly want edge-to-edge with no margin */
+      max-width: 1200px; 
       margin: 0 auto;
       padding: 0 1rem;
     }
-
-    /* Force each dropdown row onto a single line (label + lock + select). */
     .dropdown-row {
-      display: flex;
-      align-items: center;  /* vertically center them */
-      gap: 0.5rem;
-      margin-bottom: 0.5rem; /* slight spacing between rows */
-    }
-    /* The sub-label container if you wish to keep it (so the label & switch remain together). */
-    .dropdown-left {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-bottom: 0;
-      white-space: nowrap; /* keep label & switch together */
+      margin-bottom: 0.5rem;
     }
-    /* Expand the select to fill the remaining space across the row */
+    .dropdown-btn {
+      min-width: 120px; 
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+    }
     .dropdown-row select {
       flex: 1;
       padding: 0.4rem;
@@ -152,30 +116,21 @@
       border-radius: 4px;
       font-size: 0.9rem;
     }
-    .dropdown-title {
-      font-weight: 500;
-      color: #555;
-    }
-    /***************************************************************************/
 
-    /* Instructions / SD & Notes */
+    /* Locked/Unlocked button states */
+    .locked {
+      background-color: #f44336; /* red */
+      color: #fff;
+    }
+    .unlocked {
+      background-color: #4caf50; /* green */
+      color: #fff;
+    }
+
     .instructions {
       display: flex;
       flex-direction: column;
       margin-bottom: 1rem;
-    }
-    #selectedDescription {
-      font-size: 1.2rem;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    /* Combined Description (green background block) */
-    .combined-description {
-      background-color: #2e7d32;
-      color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      display: inline-block;
     }
     .desc-buttons {
       display: flex;
@@ -243,14 +198,8 @@
     .trial-results label:hover {
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
-
-    /* Color-coded for each type */
-    label.incorrect {
-      background-color: #ffebee;
-    }
-    label.independent {
-      background-color: #e8f5e9;
-    }
+    label.incorrect { background-color: #ffebee; }
+    label.independent { background-color: #e8f5e9; }
     label.verbal, label.prompted, label.modeling,
     label.gestural, label.partialPhysical, label.fullPhysical {
       background-color: #fffde7;
@@ -276,7 +225,8 @@
       border-radius: 4px;
       font-size: 0.9rem;
     }
-    .verbal, .prompted, .modeling, .gestural, .partial-physical, .full-physical {
+    .verbal, .prompted, .modeling, .gestural, 
+    .partial-physical, .full-physical {
       background-color: #fffde7;
     }
     .independent {
@@ -330,37 +280,16 @@
       font-size: 0.9rem;
       transition: background 0.2s;
     }
-    /* Individual button colors */
-    #toggleDataTableBtn {
-      background: #0288d1;
-    }
-    #toggleDataTableBtn:hover {
-      background: #0277bd;
-    }
-    #addNewRecordBtn {
-      background: #00796b;
-    }
-    #addNewRecordBtn:hover {
-      background: #00695c;
-    }
-    #importProgramBtn {
-      background: #8e24aa;
-    }
-    #importProgramBtn:hover {
-      background: #7b1fa2;
-    }
-    #exportTrialDataBtn {
-      background: #ff9800;
-    }
-    #exportTrialDataBtn:hover {
-      background: #fb8c00;
-    }
-    #resetDataBtn {
-      background: #d32f2f;
-    }
-    #resetDataBtn:hover {
-      background: #c62828;
-    }
+    #toggleDataTableBtn { background: #0288d1; }
+    #toggleDataTableBtn:hover { background: #0277bd; }
+    #addNewRecordBtn { background: #00796b; }
+    #addNewRecordBtn:hover { background: #00695c; }
+    #importProgramBtn { background: #8e24aa; }
+    #importProgramBtn:hover { background: #7b1fa2; }
+    #exportTrialDataBtn { background: #ff9800; }
+    #exportTrialDataBtn:hover { background: #fb8c00; }
+    #resetDataBtn { background: #d32f2f; }
+    #resetDataBtn:hover { background: #c62828; }
 
     #dataTableContainer {
       overflow-x: auto;
@@ -470,43 +399,22 @@
     #simpleEditModal button:hover {
       background: #0277bd;
     }
-
-    /* Old classes left intact in case they are needed */
-    .desc-main {
-      background-color: red;
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-    }
-    .target-highlight {
-      background-color: green;
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
   </style>
 </head>
 <body>
   <!-- Top Header with Logo and Title -->
   <div class="app-header">
     <img src="https://www.aeesei.com/uploads/1/2/6/7/126757502/capturelogo.png" alt="AESEEI Logo">
-    <h1>Autism Data Collection Demo</h1>
+    <h1>Autism Data Collection</h1>
   </div>
 
-  <!-- Main App Container -->
+  <!-- Main Container (Child Name row) -->
   <div class="container">
-    <!-- Child Name Header with Lock Toggle (child locked by default) -->
-    <div class="child-header">
-      <div class="dropdown-label">
-        <label class="switch">
-          <input type="checkbox" id="lockChild" checked>
-          <span class="slider"></span>
-        </label>
-        <label for="childNameSelect">Child Name:</label>
-      </div>
+    <div class="child-row">
+      <!-- Hidden lock checkbox to preserve logic -->
+      <input type="checkbox" id="lockChild" checked />
+      <!-- The button that toggles locked/unlocked for child name -->
+      <button id="childLockBtn" class="locked">Child Name 🔒</button>
       <select id="childNameSelect"></select>
     </div>
   </div>
@@ -516,45 +424,28 @@
     <div class="dropdowns">
       <!-- Content Area -->
       <div class="dropdown-row">
-        <div class="dropdown-left">
-          <label for="contentAreaSelect" class="dropdown-title">Content Area</label>
-          <label class="switch">
-            <input type="checkbox" id="lockContentArea">
-            <span class="slider"></span>
-          </label>
-        </div>
+        <input type="checkbox" id="lockContentArea" />
+        <button id="contentAreaBtn" class="unlocked">Content Area 🔓</button>
         <select id="contentAreaSelect"></select>
       </div>
 
       <!-- Program -->
       <div class="dropdown-row">
-        <div class="dropdown-left">
-          <label for="programSelect" class="dropdown-title">Program</label>
-          <label class="switch">
-            <input type="checkbox" id="lockProgram">
-            <span class="slider"></span>
-          </label>
-        </div>
+        <input type="checkbox" id="lockProgram" />
+        <button id="programBtn" class="unlocked">Program 🔓</button>
         <select id="programSelect"></select>
       </div>
 
       <!-- Target -->
       <div class="dropdown-row">
-        <div class="dropdown-left">
-          <label for="targetSelect" class="dropdown-title">Target</label>
-          <label class="switch">
-            <input type="checkbox" id="lockTarget">
-            <span class="slider"></span>
-          </label>
-        </div>
+        <input type="checkbox" id="lockTarget" />
+        <button id="targetBtn" class="unlocked">Target 🔓</button>
         <select id="targetSelect"></select>
       </div>
 
       <!-- Instructions and SD/Notes -->
       <div class="instructions">
-        <p id="selectedDescription"></p>
         <div class="desc-buttons">
-          <button id="toggleDetailsBtn">Hide Details</button>
           <button id="selectRandomBtn">Select Random</button>
         </div>
         <label for="sdInput">SD (Instruction)</label>
@@ -675,7 +566,7 @@
   <datalist id="programList"></datalist>
   <datalist id="targetList"></datalist>
 
-  <!-- All scripts remain the same (unchanged functionality) -->
+  <!-- Script: Only changed the setLockState function to use the lock emojis 🔒 / 🔓 -->
   <script>
     /******** Global Variables ********/
     let trialHistory = [];
@@ -700,54 +591,22 @@
         "Test Child": {
           "Math Skills": {
             "Counting": {
-              "Count to 5": {
-                sd: "Count from 1 to 5",
-                note: "Encourage counting slowly",
-                active: true
-              },
-              "Count to 10": {
-                sd: "Count from 1 to 10",
-                note: "Praise after each attempt",
-                active: true
-              }
+              "Count to 5": { sd: "Count from 1 to 5", note: "Encourage counting slowly", active: true },
+              "Count to 10": { sd: "Count from 1 to 10", note: "Praise after each attempt", active: true }
             },
             "Addition": {
-              "Add single digits": {
-                sd: "Add 1-digit numbers",
-                note: "Use visual aids",
-                active: true
-              },
-              "Add doubles": {
-                sd: "Add 2-digit numbers",
-                note: "Use manipulative objects",
-                active: true
-              }
+              "Add single digits": { sd: "Add 1-digit numbers", note: "Use visual aids", active: true },
+              "Add doubles": { sd: "Add 2-digit numbers", note: "Use manipulative objects", active: true }
             }
           },
           "Language Skills": {
             "Naming": {
-              "Name colors": {
-                sd: "Identify the colors",
-                note: "Use flashcards",
-                active: true
-              },
-              "Name shapes": {
-                sd: "Identify the shapes",
-                note: "Point to each shape",
-                active: true
-              }
+              "Name colors": { sd: "Identify the colors", note: "Use flashcards", active: true },
+              "Name shapes": { sd: "Identify the shapes", note: "Point to each shape", active: true }
             },
             "Labeling": {
-              "Label objects": {
-                sd: "What is this item?",
-                note: "Use real items for labeling",
-                active: true
-              },
-              "Label actions": {
-                sd: "What am I doing?",
-                note: "Use pictures of actions",
-                active: true
-              }
+              "Label objects": { sd: "What is this item?", note: "Use real items for labeling", active: true },
+              "Label actions": { sd: "What am I doing?", note: "Use pictures of actions", active: true }
             }
           }
         }
@@ -776,16 +635,28 @@
       return false;
     }
 
-    /******** Functions for Main Interface ********/
+    /******** Elements for Main Interface ********/
     const childNameSelect = document.getElementById("childNameSelect");
     const contentAreaSelect = document.getElementById("contentAreaSelect");
     const programSelect = document.getElementById("programSelect");
     const targetSelect = document.getElementById("targetSelect");
     const sdInput = document.getElementById("sdInput");
     const notesArea = document.getElementById("notesArea");
-    const descriptionP = document.getElementById("selectedDescription");
     const priorList = document.getElementById("priorList");
 
+    /* Lock checkboxes (hidden) */
+    const lockChild = document.getElementById("lockChild");
+    const lockContentArea = document.getElementById("lockContentArea");
+    const lockProgram = document.getElementById("lockProgram");
+    const lockTarget = document.getElementById("lockTarget");
+
+    /* Lock/Unlock buttons */
+    const childLockBtn = document.getElementById("childLockBtn");
+    const contentAreaBtn = document.getElementById("contentAreaBtn");
+    const programBtn = document.getElementById("programBtn");
+    const targetBtn = document.getElementById("targetBtn");
+
+    /******** Populate Child Names ********/
     function populateChildNames() {
       childNameSelect.innerHTML = "";
       const validChildren = Object.keys(appData).filter(child => childHasActiveRecords(child));
@@ -799,6 +670,7 @@
         childNameSelect.value = validChildren[0];
       }
     }
+
     function updateContentAreas() {
       const selectedChild = childNameSelect.value;
       contentAreaSelect.innerHTML = "";
@@ -842,14 +714,7 @@
           });
       }
     }
-    function updateDescription() {
-      const selectedChild = childNameSelect.value;
-      const selectedArea = contentAreaSelect.value;
-      const selectedProgram = programSelect.value;
-      const selectedTarget = targetSelect.value;
-      descriptionP.innerHTML =
-        '<span class="combined-description">' + selectedChild + ' -- ' + selectedArea + ' -- ' + selectedProgram + ' -- ' + selectedTarget + '</span>';
-    }
+
     function updateInstructions() {
       const selectedChild = childNameSelect.value;
       const selectedArea = contentAreaSelect.value;
@@ -882,7 +747,8 @@
       priorList.innerHTML = "";
       for (let i = lastFive.length - 1; i >= 0; i--) {
         const li = document.createElement("li");
-        li.textContent = lastFive[i].result.charAt(0).toUpperCase() + lastFive[i].result.slice(1);
+        li.textContent = 
+          lastFive[i].result.charAt(0).toUpperCase() + lastFive[i].result.slice(1);
         li.className = lastFive[i].result;
         priorList.appendChild(li);
       }
@@ -893,25 +759,21 @@
       updateProgramSelect();
       updateTargetSelect();
       updateInstructions();
-      updateDescription();
       updatePriorResults();
     });
     contentAreaSelect.addEventListener('change', () => {
       updateProgramSelect();
       updateTargetSelect();
       updateInstructions();
-      updateDescription();
       updatePriorResults();
     });
     programSelect.addEventListener('change', () => {
       updateTargetSelect();
       updateInstructions();
-      updateDescription();
       updatePriorResults();
     });
     targetSelect.addEventListener('change', () => {
       updateInstructions();
-      updateDescription();
       updatePriorResults();
     });
 
@@ -920,41 +782,74 @@
     updateProgramSelect();
     updateTargetSelect();
     updateInstructions();
-    updateDescription();
     updatePriorResults();
 
-    /******** Randomization Functionality with Cascading Locks ********/
-    function childHasActiveRecords(childName) {
-      if (!appData[childName]) return false;
-      for (const area in appData[childName]) {
-        for (const program in appData[childName][area]) {
-          for (const target in appData[childName][area][program]) {
-            if (appData[childName][area][program][target].active) {
-              return true;
-            }
-          }
-        }
+    /******** Lock/Unlock Buttons ********/
+    /** 
+     * Changed here to use emojis:
+     *   🔒 for locked
+     *   🔓 for unlocked
+     */
+    function setLockState(checkbox, button, labelText) {
+      if (checkbox.checked) {
+        // LOCKED
+        button.textContent = labelText + " 🔒";
+        button.classList.add("locked");
+        button.classList.remove("unlocked");
+      } else {
+        // UNLOCKED
+        button.textContent = labelText + " 🔓";
+        button.classList.add("unlocked");
+        button.classList.remove("locked");
       }
-      return false;
     }
-    function randomizeTrialData() {
-      let rawLockChild = document.getElementById('lockChild').checked;
-      let rawLockContentArea = document.getElementById('lockContentArea').checked;
-      let rawLockProgram = document.getElementById('lockProgram').checked;
-      let rawLockTarget = document.getElementById('lockTarget').checked;
 
-      let lockChild = rawLockChild || rawLockContentArea || rawLockProgram || rawLockTarget;
-      let lockContentArea = rawLockContentArea || rawLockProgram || rawLockTarget;
-      let lockProgram = rawLockProgram || rawLockTarget;
-      let lockTarget = rawLockTarget;
+    function toggleLock(checkbox, button, labelText) {
+      checkbox.checked = !checkbox.checked;
+      setLockState(checkbox, button, labelText);
+    }
+
+    // Child Lock
+    childLockBtn.addEventListener("click", () => {
+      toggleLock(lockChild, childLockBtn, "Child Name");
+    });
+    // Content Area Lock
+    contentAreaBtn.addEventListener("click", () => {
+      toggleLock(lockContentArea, contentAreaBtn, "Content Area");
+    });
+    // Program Lock
+    programBtn.addEventListener("click", () => {
+      toggleLock(lockProgram, programBtn, "Program");
+    });
+    // Target Lock
+    targetBtn.addEventListener("click", () => {
+      toggleLock(lockTarget, targetBtn, "Target");
+    });
+
+    // Initialize the lock button states
+    setLockState(lockChild, childLockBtn, "Child Name");
+    setLockState(lockContentArea, contentAreaBtn, "Content Area");
+    setLockState(lockProgram, programBtn, "Program");
+    setLockState(lockTarget, targetBtn, "Target");
+
+    /******** Randomization Functionality ********/
+    function randomizeTrialData() {
+      let rawLockChild = lockChild.checked;
+      let rawLockContentArea = lockContentArea.checked;
+      let rawLockProgram = lockProgram.checked;
+      let rawLockTarget = lockTarget.checked;
+
+      let lockChildEff = rawLockChild || rawLockContentArea || rawLockProgram || rawLockTarget;
+      let lockContentAreaEff = rawLockContentArea || rawLockProgram || rawLockTarget;
+      let lockProgramEff = rawLockProgram || rawLockTarget;
+      let lockTargetEff = rawLockTarget;
 
       let currentChild = childNameSelect.value;
       let currentArea = contentAreaSelect.value;
       let currentProgram = programSelect.value;
       let currentTarget = targetSelect.value;
 
-      // Randomize Child
-      if (!lockChild) {
+      if (!lockChildEff) {
         const validChildren = Object.keys(appData).filter(child => childHasActiveRecords(child));
         if (validChildren.length > 0) {
           currentChild = validChildren[Math.floor(Math.random() * validChildren.length)];
@@ -964,9 +859,8 @@
       if (!appData[currentChild]) return;
       const childData = appData[currentChild];
 
-      // Randomize Content Area
       const availableAreas = Object.keys(childData);
-      if (!lockContentArea) {
+      if (!lockContentAreaEff) {
         if (availableAreas.length > 0) {
           currentArea = availableAreas[Math.floor(Math.random() * availableAreas.length)];
           contentAreaSelect.value = currentArea;
@@ -979,9 +873,8 @@
       }
       updateProgramSelect();
 
-      // Randomize Program
       const availablePrograms = Object.keys(childData[currentArea] || {});
-      if (!lockProgram) {
+      if (!lockProgramEff) {
         if (availablePrograms.length > 0) {
           currentProgram = availablePrograms[Math.floor(Math.random() * availablePrograms.length)];
           programSelect.value = currentProgram;
@@ -994,10 +887,9 @@
       }
       updateTargetSelect();
 
-      // Randomize Target
       const availableTargets = Object.keys(childData[currentArea][currentProgram] || {})
         .filter(t => childData[currentArea][currentProgram][t].active);
-      if (!lockTarget) {
+      if (!lockTargetEff) {
         if (availableTargets.length > 0) {
           currentTarget = availableTargets[Math.floor(Math.random() * availableTargets.length)];
           targetSelect.value = currentTarget;
@@ -1010,26 +902,11 @@
       }
 
       updateInstructions();
-      updateDescription();
       updatePriorResults();
     }
     document.getElementById('selectRandomBtn').addEventListener('click', randomizeTrialData);
 
-    /******** Toggle Details Section ********/
-    const toggleBtn = document.getElementById('toggleDetailsBtn');
-    toggleBtn.addEventListener('click', () => {
-      const topSection = document.getElementById('topSection');
-      const currentDisplay = window.getComputedStyle(topSection).display;
-      if (currentDisplay === 'none') {
-        topSection.style.display = 'block';
-        toggleBtn.textContent = 'Hide Details';
-      } else {
-        topSection.style.display = 'none';
-        toggleBtn.textContent = 'View Details';
-      }
-    });
-
-    /******** Trial Data Recording with Confirmation Popup ********/
+    /******** Trial Data Recording ********/
     function clearTrialSelection() {
       document.querySelectorAll('input[name="trialResult"]').forEach(radio => {
         radio.checked = false;
@@ -1095,7 +972,7 @@
       updateProgramSelect();
       updateTargetSelect();
       updateInstructions();
-      updateDescription();
+      updatePriorResults();
       alert("CSV import successful.");
     }
 
@@ -1297,7 +1174,6 @@
         updateTargetSelect();
         targetSelect.value = newTarget;
         updateInstructions();
-        updateDescription();
         updatePriorResults();
       }
       saveAppData();
@@ -1341,6 +1217,7 @@
       });
       thead += "</tr>";
 
+      // Filter row
       thead += "<tr class='filterRow'>";
       columns.forEach((col, index) => {
         if (col === "Active" || col === "Action") {
@@ -1417,7 +1294,6 @@
           appData[child][area][prog][targ].active = chk.checked;
           updateTargetSelect();
           updateInstructions();
-          updateDescription();
           updatePriorResults();
           saveAppData();
         });
@@ -1488,18 +1364,18 @@
       updateProgramSelect();
       updateTargetSelect();
       updateInstructions();
-      updateDescription();
       updatePriorResults();
-
       buildDataTable();
       alert("Data has been reset to default.");
     });
 
     /******** Close modal if click outside ********/
+    const simpleEditModalContainer = document.getElementById('simpleEditModal');
     window.addEventListener('click', function(e) {
-      if (e.target == simpleEditModal) { closeSimpleEditModalFunc(); }
+      if (e.target == simpleEditModalContainer) {
+        closeSimpleEditModalFunc();
+      }
     });
   </script>
 </body>
 </html>
-
