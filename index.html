@@ -46,23 +46,26 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
-    /* Child Name Row (matches others) */
+    /* Child Name Row */
     .child-row {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       margin-bottom: 1rem;
     }
-    #childLockBtn {
-      min-width: 120px;
+
+    /* Shared button style for all lock/unlock buttons */
+    .dropdown-btn {
+      min-width: 130px; /* slightly more for mobile readability */
       border: none;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.9rem;
       padding: 0.4rem 0.8rem;
       transition: background-color 0.2s;
-      white-space: nowrap; 
+      white-space: nowrap;
     }
+
     #childNameSelect {
       flex: 1;
       padding: 0.4rem;
@@ -99,16 +102,7 @@
       gap: 0.5rem;
       margin-bottom: 0.5rem;
     }
-    .dropdown-btn {
-      min-width: 120px; 
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      padding: 0.4rem 0.8rem;
-      transition: background-color 0.2s;
-      white-space: nowrap;
-    }
+
     .dropdown-row select {
       flex: 1;
       padding: 0.4rem;
@@ -405,7 +399,7 @@
   <!-- Top Header with Logo and Title -->
   <div class="app-header">
     <img src="https://www.aeesei.com/uploads/1/2/6/7/126757502/capturelogo.png" alt="AESEEI Logo">
-    <h1>Autism Data Collection</h1>
+    <b1>Autism Data Collection</b1>
   </div>
 
   <!-- Main Container (Child Name row) -->
@@ -413,8 +407,8 @@
     <div class="child-row">
       <!-- Hidden lock checkbox to preserve logic -->
       <input type="checkbox" id="lockChild" checked />
-      <!-- The button that toggles locked/unlocked for child name -->
-      <button id="childLockBtn" class="locked">Child Name 🔒</button>
+      <!-- The button that toggles locked/unlocked for child name (using .dropdown-btn for consistent styling) -->
+      <button id="childLockBtn" class="dropdown-btn locked">Child Name 🔒</button>
       <select id="childNameSelect"></select>
     </div>
   </div>
@@ -425,21 +419,22 @@
       <!-- Content Area -->
       <div class="dropdown-row">
         <input type="checkbox" id="lockContentArea" />
-        <button id="contentAreaBtn" class="unlocked">Content Area 🔓</button>
+        <!-- Also use .dropdown-btn here -->
+        <button id="contentAreaBtn" class="dropdown-btn unlocked">Content Area 🔓</button>
         <select id="contentAreaSelect"></select>
       </div>
 
       <!-- Program -->
       <div class="dropdown-row">
         <input type="checkbox" id="lockProgram" />
-        <button id="programBtn" class="unlocked">Program 🔓</button>
+        <button id="programBtn" class="dropdown-btn unlocked">Program 🔓</button>
         <select id="programSelect"></select>
       </div>
 
       <!-- Target -->
       <div class="dropdown-row">
         <input type="checkbox" id="lockTarget" />
-        <button id="targetBtn" class="unlocked">Target 🔓</button>
+        <button id="targetBtn" class="dropdown-btn unlocked">Target 🔓</button>
         <select id="targetSelect"></select>
       </div>
 
@@ -566,7 +561,7 @@
   <datalist id="programList"></datalist>
   <datalist id="targetList"></datalist>
 
-  <!-- Script: Only changed the setLockState function to use the lock emojis 🔒 / 🔓 -->
+  <!-- Script: NO logic changes, only same code as before -->
   <script>
     /******** Global Variables ********/
     let trialHistory = [];
@@ -785,11 +780,6 @@
     updatePriorResults();
 
     /******** Lock/Unlock Buttons ********/
-    /** 
-     * Changed here to use emojis:
-     *   🔒 for locked
-     *   🔓 for unlocked
-     */
     function setLockState(checkbox, button, labelText) {
       if (checkbox.checked) {
         // LOCKED
