@@ -21,13 +21,14 @@
     .app-header {
       display: flex;
       align-items: center;
+      justify-content: center; /* Center the logo */
       background: #ffffff;
       padding: 0.5rem 1rem;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    /* Logo is now smaller for mobile */
+    /* Logo is now larger and centered for mobile */
     .app-header img {
-      height: 30px; /* Reduced from 50px */
+      height: 40px; /* Increased from 30px */
       margin-right: 1rem;
     }
     /* h1 is empty, just removing the text */
@@ -445,9 +446,9 @@
           <button id="selectRandomBtn">Select Random</button>
         </div>
         <label for="sdInput">SD (Instruction)</label>
-        <textarea id="sdInput" rows="2" placeholder='"Do the puzzle" while placing the piece...'></textarea>
+        <textarea id="sdInput" rows="2" placeholder='"Do the puzzle" while placing the piece...' readonly></textarea>
         <label for="notesArea">Note</label>
-        <textarea id="notesArea" rows="2" placeholder="Notes: Work Harder, Work Harder..."></textarea>
+        <textarea id="notesArea" rows="2" placeholder="Notes: Work Harder, Work Harder..." readonly></textarea>
       </div>
 
       <!-- Trial Results -->
@@ -1370,3 +1371,4 @@
   </script>
 </body>
 </html>
+
