@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>ABA Data Collector + Program Builder (with Improved Modal Layout)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Autism Data Collection</title>
 
-  <!-- Google Font -->
+  <!-- Google Font (Optional) -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     body {
@@ -17,21 +20,24 @@
       padding: 0;
     }
 
-    /* Header with logo + now-empty h1 */
+    /* Helps us show/hide sections with toggles. */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ====== HEADER ====== */
     .app-header {
       display: flex;
       align-items: center;
-      justify-content: center; /* Center the logo */
+      justify-content: center;
       background: #ffffff;
-      padding: 0.25rem 0.5rem; /* Reduced from 0.5rem 1rem */
+      padding: 0.5rem 1rem;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    /* Logo is now larger and centered for mobile */
     .app-header img {
-      height: 40px; /* Increased from 30px */
+      height: 40px;
       margin-right: 1rem;
     }
-    /* h1 is empty, just removing the text */
     .app-header h1 {
       font-size: 1.5rem;
       font-weight: 500;
@@ -39,25 +45,24 @@
       color: #333;
     }
 
-    /* Main container */
+    /* ====== MAIN DATA COLLECTOR UI ====== */
     .container {
-      max-width: 800px; 
-      margin: 0.5rem auto; /* Reduced from 1rem auto */
-      padding: 0.5rem;     /* Reduced from 1rem */
+      max-width: 800px;
+      margin: 1rem auto;
+      padding: 1rem;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
-
-    /* Child Name Row */
     .child-row {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-bottom: 0.5rem; /* Reduced from 1rem */
+      margin-bottom: 1rem;
     }
-
-    /* Shared button style for all lock/unlock buttons */
+    select, input[type="text"], textarea {
+      font-family: 'Roboto', sans-serif;
+    }
     .dropdown-btn {
       min-width: 130px;
       border: none;
@@ -65,10 +70,8 @@
       cursor: pointer;
       font-size: 0.9rem;
       padding: 0.4rem 0.8rem;
-      transition: background-color 0.2s;
       white-space: nowrap;
     }
-
     #childNameSelect {
       flex: 1;
       padding: 0.4rem;
@@ -76,45 +79,6 @@
       border-radius: 4px;
       font-size: 0.9rem;
     }
-
-    /* Hide the old lock slider checkboxes (still exist for logic) */
-    #lockChild, #lockContentArea, #lockProgram, #lockTarget {
-      display: none;
-    }
-
-    /* Top Section (Full Width) */
-    #topSection {
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      width: 100vw;
-      background: #fff;
-      padding: 0.5rem 0;   /* Reduced from 1rem 0 */
-      margin-bottom: 0.5rem; /* Reduced from 1rem */
-    }
-    #topSection .dropdowns {
-      max-width: 1200px; 
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-    .dropdown-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.25rem; /* Reduced from 0.5rem */
-    }
-
-    .dropdown-row select {
-      flex: 1;
-      padding: 0.4rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
-
-    /* Locked/Unlocked button states */
     .locked {
       background-color: #f44336; /* red */
       color: #fff;
@@ -124,16 +88,39 @@
       color: #fff;
     }
 
+    /* ====== FULL WIDTH TOP SECTION ====== */
+    #topSection {
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      width: 100vw;
+      background: #fff;
+      padding: 1rem 0;
+      margin-bottom: 1rem;
+    }
+    #topSection .dropdowns {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .dropdown-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
     .instructions {
       display: flex;
       flex-direction: column;
-      margin-bottom: 0.5rem; /* Reduced from 1rem */
+      margin-bottom: 1rem;
     }
     .desc-buttons {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-bottom: 0.5rem; /* Reduced from 1rem */
+      margin-bottom: 0.5rem;
       justify-content: flex-end;
     }
     .desc-buttons button {
@@ -144,7 +131,6 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.9rem;
-      transition: background 0.2s;
     }
     .desc-buttons button:hover {
       background: #0277bd;
@@ -158,7 +144,7 @@
       width: 100%;
       padding: 0.5rem;
       font-size: 0.9rem;
-      margin-bottom: 0.5rem; /* Reduced from 1rem */
+      margin-bottom: 0.5rem;
       border-radius: 4px;
       border: 1px solid #ccc;
       resize: vertical;
@@ -192,13 +178,14 @@
       margin-right: 0.5rem;
       transform: scale(1.2);
     }
-    .trial-results label:hover {
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
     label.incorrect { background-color: #ffebee; }
     label.independent { background-color: #e8f5e9; }
-    label.verbal, label.prompted, label.modeling,
-    label.gestural, label.partialPhysical, label.fullPhysical {
+    label.verbal,
+    label.prompted,
+    label.modeling,
+    label.gestural,
+    label.partialPhysical,
+    label.fullPhysical {
       background-color: #fffde7;
     }
 
@@ -222,18 +209,18 @@
       border-radius: 4px;
       font-size: 0.9rem;
     }
-    .verbal, .prompted, .modeling, .gestural, 
-    .partial-physical, .full-physical {
+    .independent { background-color: #e8f5e9; }
+    .incorrect   { background-color: #ffebee; }
+    .verbal,
+    .prompted,
+    .modeling,
+    .gestural,
+    .partial-physical,
+    .full-physical {
       background-color: #fffde7;
     }
-    .independent {
-      background-color: #e8f5e9;
-    }
-    .incorrect {
-      background-color: #ffebee;
-    }
 
-    /* Manage Data Section (centered full-width band) */
+    /* ====== MANAGE DATA SECTION ====== */
     #dataManagementSection {
       position: relative;
       left: 50%;
@@ -268,7 +255,8 @@
     #addNewRecordBtn,
     #importProgramBtn,
     #exportTrialDataBtn,
-    #resetDataBtn {
+    #resetDataBtn,
+    #toggleProgramBuilderBtn {
       padding: 0.6rem 1rem;
       border: none;
       border-radius: 4px;
@@ -287,6 +275,8 @@
     #exportTrialDataBtn:hover { background: #fb8c00; }
     #resetDataBtn { background: #d32f2f; }
     #resetDataBtn:hover { background: #c62828; }
+    #toggleProgramBuilderBtn { background: #007bff; }
+    #toggleProgramBuilderBtn:hover { background: #0056b3; }
 
     #dataTableContainer {
       overflow-x: auto;
@@ -311,13 +301,11 @@
       cursor: pointer;
       font-weight: 500;
     }
-    /* Filter row */
     #dataTable thead tr.filterRow input {
       width: 90%;
       padding: 0.2rem;
       font-size: 0.85rem;
     }
-    /* Active checkbox */
     .activeCheckbox {
       width: 16px;
       height: 16px;
@@ -336,7 +324,7 @@
       background: #0277bd;
     }
 
-    /* Simple Edit Modal */
+    /* ====== MODAL (IMPROVED LAYOUT) ====== */
     .modal {
       display: none;
       position: fixed;
@@ -347,108 +335,266 @@
       background-color: rgba(0,0,0,0.5);
     }
     .modal-content {
-      background-color: #fefefe;
+      background-color: #fff;
       margin: 5% auto;
       padding: 20px;
-      border: 1px solid #888;
+      border-radius: 8px;
       width: 90%;
       max-width: 600px;
-      border-radius: 4px;
       position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .close {
       color: #aaa;
-      float: right;
       font-size: 28px;
       font-weight: bold;
+      float: right;
       cursor: pointer;
     }
     .close:hover, .close:focus {
-      color: black;
+      color: #000;
       text-decoration: none;
     }
-    #simpleEditModal label {
-      display: block;
-      margin-top: 10px;
+    #simpleModalTitle {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
       font-weight: 500;
-      color: #555;
     }
-    #simpleEditModal input[type="text"],
-    #simpleEditModal textarea {
+    /* The form in the modal: stack items vertically */
+    #simpleEditForm {
+      display: flex;
+      flex-direction: column;
+    }
+    #simpleEditForm label {
+      font-weight: 500;
+      color: #333;
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    #simpleEditForm input[type="text"],
+    #simpleEditForm textarea {
       width: 100%;
-      padding: 0.3rem;
-      margin-top: 5px;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+    #simpleEditForm textarea {
+      resize: vertical;
+    }
+    .checkbox-row {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+    /* Buttons at bottom of the form */
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    #simpleSaveEditBtn,
+    #simpleCancelEditBtn {
+      background-color: #0288d1;
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    #simpleSaveEditBtn:hover,
+    #simpleCancelEditBtn:hover {
+      background-color: #0277bd;
+    }
+    /* Cancel button distinct color (optional) */
+    #simpleCancelEditBtn {
+      background-color: #757575;
+    }
+    #simpleCancelEditBtn:hover {
+      background-color: #616161;
+    }
+    @media (max-width: 600px) {
+      .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 1rem;
+      }
+      #simpleEditForm label {
+        margin-top: 0.75rem;
+      }
+    }
+
+    /* ====== PROGRAM BUILDER SECTION ====== */
+    #programBuilderSection {
+      max-width: 800px;
+      margin: 1rem auto;
+      padding: 1rem;
+      background-color: #f4f6f8;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    #programBuilderSection h2 {
+      margin-bottom: 1rem;
+    }
+    .builder-step {
+      margin-bottom: 20px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .builder-step input[type="text"],
+    .builder-step select {
+      width: 100%;
+      padding: 8px;
+      font-size: 1rem;
+      margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
-      font-size: 0.9rem;
     }
-    #simpleEditModal button {
-      margin-top: 10px;
-      padding: 0.5rem 1rem;
-      background: #0288d1;
-      color: #fff;
+    .builder-step button {
+      padding: 8px 12px;
+      font-size: 1rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 0.9rem;
+      margin-top: 10px;
+      margin-right: 5px;
+      background-color: #007bff;
+      color: #fff;
+      transition: background-color 0.3s ease;
     }
-    #simpleEditModal button:hover {
-      background: #0277bd;
+    .builder-step button:hover {
+      background-color: #0056b3;
+    }
+    #libraryImportSection {
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    #programsContainer .programItem {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .programHeader {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .toggleTargetsBtn {
+      background: none;
+      border: 1px solid #007bff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: #007bff;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .toggleTargetsBtn:hover {
+      background-color: #007bff;
+      color: #fff;
+    }
+    .programLabel {
+      font-weight: bold;
+    }
+    .programStatus {
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: #fff;
+    }
+    .programStatus.active {
+      background-color: #28a745; /* green */
+    }
+    .programStatus.inactive {
+      background-color: #dc3545; /* red */
+    }
+    .targetsContainer {
+      margin-left: 30px;
+      margin-top: 8px;
+    }
+    .summaryDomain {
+      margin-bottom: 10px;
+      padding: 5px;
+      border-bottom: 1px solid #eee;
+    }
+    .summaryProgram {
+      margin-left: 20px;
+      padding: 3px 0;
+    }
+    .summaryProgram button {
+      background-color: #6c757d;
+      margin-left: 5px;
+      padding: 4px 8px;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      color: #fff;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <!-- Top Header with Logo (shrunk) and Empty H1 -->
+  <!-- HEADER -->
   <div class="app-header">
-    <img src="https://www.aeesei.com/uploads/1/2/6/7/126757502/capturelogo.png" alt="AESEEI Logo">
-    <h1></h1> <!-- Removed text; leaving element so code structure remains intact -->
+    <img
+      src="https://www.aeesei.com/uploads/1/2/6/7/126757502/capturelogo.png"
+      alt="AESEEI Logo"
+    />
+    <h1>ABA Data Collector + Program Builder</h1>
   </div>
 
-  <!-- Main Container (Child Name row) -->
+  <!-- MAIN DATA COLLECTOR UI -->
   <div class="container">
     <div class="child-row">
-      <!-- Hidden lock checkbox to preserve logic -->
-      <input type="checkbox" id="lockChild" checked />
-      <!-- The button that toggles locked/unlocked for child name -->
+      <input type="checkbox" id="lockChild" checked style="display:none"/>
       <button id="childLockBtn" class="dropdown-btn locked">Child Name 🔒</button>
       <select id="childNameSelect"></select>
     </div>
   </div>
 
-  <!-- Top Section (Full Width) -->
   <div id="topSection">
     <div class="dropdowns">
       <!-- Content Area -->
       <div class="dropdown-row">
-        <input type="checkbox" id="lockContentArea" />
+        <input type="checkbox" id="lockContentArea" style="display:none"/>
         <button id="contentAreaBtn" class="dropdown-btn unlocked">Content Area 🔓</button>
         <select id="contentAreaSelect"></select>
       </div>
-
       <!-- Program -->
       <div class="dropdown-row">
-        <input type="checkbox" id="lockProgram" />
+        <input type="checkbox" id="lockProgram" style="display:none"/>
         <button id="programBtn" class="dropdown-btn unlocked">Program 🔓</button>
         <select id="programSelect"></select>
       </div>
-
       <!-- Target -->
       <div class="dropdown-row">
-        <input type="checkbox" id="lockTarget" />
+        <input type="checkbox" id="lockTarget" style="display:none"/>
         <button id="targetBtn" class="dropdown-btn unlocked">Target 🔓</button>
         <select id="targetSelect"></select>
       </div>
 
-      <!-- Instructions and SD/Notes -->
+      <!-- SD / Notes -->
       <div class="instructions">
         <div class="desc-buttons">
           <button id="selectRandomBtn">Select Random</button>
         </div>
         <label for="sdInput">SD (Instruction)</label>
-        <textarea id="sdInput" rows="2" placeholder='"Do the puzzle" while placing the piece...' readonly></textarea>
+        <textarea id="sdInput" rows="2" readonly></textarea>
         <label for="notesArea">Note</label>
-        <textarea id="notesArea" rows="2" placeholder="Notes: Work Harder, Work Harder..." readonly></textarea>
+        <textarea id="notesArea" rows="2" readonly></textarea>
       </div>
 
       <!-- Trial Results -->
@@ -491,289 +637,1258 @@
     </div>
   </div>
 
-  <!-- Manage Data Section (spans full width) -->
+  <!-- Manage Data -->
   <div id="dataManagementSection">
     <hr/>
     <h2>Manage Data</h2>
     <div class="data-buttons">
       <button id="toggleDataTableBtn">Show Full Program</button>
       <button id="addNewRecordBtn">Add New Record</button>
-      <button id="importProgramBtn">Import Program</button>
+      <button id="importProgramBtn">Import Program CSV</button>
       <button id="exportTrialDataBtn">Export Trial Data CSV</button>
       <button id="resetDataBtn">Reset Data</button>
+      <!-- The new button that toggles the Program Builder section -->
+      <button id="toggleProgramBuilderBtn">Add Child / Build Program</button>
     </div>
     <div id="dataTableContainer" style="display: none;">
       <table id="dataTable"></table>
     </div>
   </div>
 
-  <!-- Hidden CSV File Input (for CSV import) -->
-  <input type="file" id="csvFileInput" accept=".csv" style="opacity: 0; position: absolute; left: -9999px;" />
+  <!-- File Input for CSV import -->
+  <input type="file" id="csvFileInput" accept=".csv" style="display:none" />
 
-  <!-- Simple Edit Modal (for adding/editing records) -->
+  <!-- Simple Edit Modal (IMPROVED LAYOUT) -->
   <div id="simpleEditModal" class="modal">
     <div class="modal-content">
       <span id="closeSimpleEditModal" class="close">&times;</span>
       <h2 id="simpleModalTitle">Edit Record</h2>
+
       <form id="simpleEditForm">
-        <!-- Hidden fields to track mode ("edit" or "add") and original record keys -->
+        <!-- Hidden fields -->
         <input type="hidden" id="simpleEditMode" value="edit">
         <input type="hidden" id="simpleOriginalChild" value="">
         <input type="hidden" id="simpleOriginalArea" value="">
         <input type="hidden" id="simpleOriginalProgram" value="">
         <input type="hidden" id="simpleOriginalTarget" value="">
 
-        <!-- Fields with datalists for suggestions -->
         <label for="simpleEditChild">Child Name</label>
-        <input type="text" id="simpleEditChild" list="childList" required>
-        <datalist id="childList"></datalist>
+        <input
+          type="text"
+          id="simpleEditChild"
+          list="childList"
+          required
+          placeholder="Enter or select child name..."
+        />
 
         <label for="simpleEditContentArea">Content Area</label>
-        <input type="text" id="simpleEditContentArea" list="contentAreaList" required>
-        <datalist id="contentAreaList"></datalist>
+        <input
+          type="text"
+          id="simpleEditContentArea"
+          list="contentAreaList"
+          required
+          placeholder="e.g., Math Skills"
+        />
 
         <label for="simpleEditProgram">Program</label>
-        <input type="text" id="simpleEditProgram" list="programList" required>
-        <datalist id="programList"></datalist>
+        <input
+          type="text"
+          id="simpleEditProgram"
+          list="programList"
+          required
+          placeholder="e.g., Counting"
+        />
 
         <label for="simpleEditTarget">Target</label>
-        <input type="text" id="simpleEditTarget" list="targetList" required>
-        <datalist id="targetList"></datalist>
+        <input
+          type="text"
+          id="simpleEditTarget"
+          list="targetList"
+          required
+          placeholder="e.g., Count to 5"
+        />
 
         <label for="simpleEditSD">SD (Instruction)</label>
-        <textarea id="simpleEditSD" required></textarea>
+        <textarea
+          id="simpleEditSD"
+          rows="2"
+          required
+          placeholder='e.g. "Count from 1 to 5"'
+        ></textarea>
 
         <label for="simpleEditNote">Note</label>
-        <textarea id="simpleEditNote" required></textarea>
+        <textarea
+          id="simpleEditNote"
+          rows="2"
+          required
+          placeholder="Additional notes or instructions..."
+        ></textarea>
 
-        <!-- Active checkbox (for new records) -->
-        <label style="margin-top: 10px;">
-          <input type="checkbox" id="simpleEditActive"> Active
-        </label>
+        <!-- Active checkbox -->
+        <div class="checkbox-row">
+          <label style="display: inline-flex; align-items: center; margin: 0;">
+            <input
+              type="checkbox"
+              id="simpleEditActive"
+              style="margin-right: 0.5rem;"
+            />
+            Active
+          </label>
+        </div>
 
-        <button type="submit" id="simpleSaveEditBtn">Save</button>
-        <button type="button" id="simpleCancelEditBtn">Cancel</button>
+        <div class="button-row">
+          <button type="submit" id="simpleSaveEditBtn">Save</button>
+          <button type="button" id="simpleCancelEditBtn">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
 
-  <!-- Datalists for Simple Edit Modal -->
+  <!-- Datalists for the Simple Edit Modal -->
   <datalist id="childList"></datalist>
   <datalist id="contentAreaList"></datalist>
   <datalist id="programList"></datalist>
   <datalist id="targetList"></datalist>
 
-  <!-- Script: NO logic changes, only same code as before -->
+  <!-- ========================================================= -->
+  <!-- PROGRAM BUILDER SECTION (Initially Hidden) -->
+  <!-- ========================================================= -->
+  <div id="programBuilderSection" class="hidden">
+    <h2>Program Builder Wizard</h2>
+
+    <!-- Optional library import area -->
+    <div id="libraryImportSection">
+      <p>CSV header must be: <strong>domain, program, target, sd</strong></p>
+      <button id="builderImportLibraryBtn">Import/Update Library</button>
+      <input type="file" id="builderImportFile" accept=".csv" style="display:none">
+    </div>
+
+    <!-- Summary of selections so far -->
+    <div class="builder-step">
+      <h3>Program Summary</h3>
+      <div id="builderSummaryContent"><em>No selections yet.</em></div>
+    </div>
+
+    <!-- Step 1: Child's Name -->
+    <div id="builderStep1" class="builder-step">
+      <h3>Step 1: Enter Child's Name</h3>
+      <input type="text" id="builderChildName" placeholder="Child's Name">
+      <button id="builderNext1">Next</button>
+    </div>
+
+    <!-- Step 2: Select Domain -->
+    <div id="builderStep2" class="builder-step hidden">
+      <h3>Step 2: Select Domain</h3>
+      <select id="builderDomainSelect">
+        <option value="">-- Select Domain --</option>
+      </select>
+      <button id="builderNext2">Next</button>
+    </div>
+
+    <!-- Step 3: Pick Programs & Targets -->
+    <div id="builderStep3" class="builder-step hidden">
+      <h3>Step 3: Select Programs & Targets for <span id="builderCurrentDomainLabel"></span></h3>
+      <div id="programsContainer"></div>
+      <button id="builderCancelDomainBtn">Cancel This Domain</button>
+      <button id="builderAddDomainBtn">Save Domain</button>
+    </div>
+
+    <!-- Final Finish Button -->
+    <button
+      id="builderFinishBtn"
+      class="hidden"
+      style="background-color: #28a745;"
+    >
+      Finish & Add to Main App
+    </button>
+  </div>
+
+  <!-- Place ALL scripts at the end so they can access all elements -->
   <script>
-    /******** Global Variables ********/
-    let trialHistory = [];
-    let sortOrder = 1;
+  /*******************************************************************************
+   *   DATA COLLECTOR LOGIC
+   ******************************************************************************/
+  let trialHistory = [];
+  let sortOrder = 1;
 
-    /******** Local Storage Functions ********/
-    function loadAppData() {
-      const stored = localStorage.getItem("appData");
-      if (stored) {
-        try { return JSON.parse(stored); }
-        catch (e) { console.error("Error parsing appData", e); }
-      }
-      return null;
+  function loadAppData() {
+    const stored = localStorage.getItem("appData");
+    if (stored) {
+      try { return JSON.parse(stored); }
+      catch(e) { console.error("Error parsing appData", e); }
     }
-    function saveAppData() {
-      localStorage.setItem("appData", JSON.stringify(appData));
-    }
-
-    /******** Default Minimal Data for Reset ********/
-    function getDefaultData() {
-      return {
-        "Test Child": {
-          "Math Skills": {
-            "Counting": {
-              "Count to 5": { sd: "Count from 1 to 5", note: "Encourage counting slowly", active: true },
-              "Count to 10": { sd: "Count from 1 to 10", note: "Praise after each attempt", active: true }
-            },
-            "Addition": {
-              "Add single digits": { sd: "Add 1-digit numbers", note: "Use visual aids", active: true },
-              "Add doubles": { sd: "Add 2-digit numbers", note: "Use manipulative objects", active: true }
-            }
-          },
-          "Language Skills": {
-            "Naming": {
-              "Name colors": { sd: "Identify the colors", note: "Use flashcards", active: true },
-              "Name shapes": { sd: "Identify the shapes", note: "Point to each shape", active: true }
-            },
-            "Labeling": {
-              "Label objects": { sd: "What is this item?", note: "Use real items for labeling", active: true },
-              "Label actions": { sd: "What am I doing?", note: "Use pictures of actions", active: true }
+    return null;
+  }
+  function saveAppData() {
+    localStorage.setItem("appData", JSON.stringify(appData));
+  }
+  function getDefaultData() {
+    return {
+      "Test Child": {
+        "Math Skills": {
+          "Counting": {
+            "Count to 5": {
+              sd: "Count from 1 to 5",
+              note: "Encourage counting slowly",
+              active: true
             }
           }
         }
-      };
-    }
+      }
+    };
+  }
 
-    /******** Global Data Structure ********/
-    let appData = loadAppData();
-    if (!appData || Object.keys(appData).length === 0) {
+  let appData = loadAppData();
+  if (!appData || Object.keys(appData).length === 0) {
+    appData = getDefaultData();
+    saveAppData();
+  }
+
+  function childHasActiveRecords(childName) {
+    if (!appData[childName]) return false;
+    for (const area in appData[childName]) {
+      for (const program in appData[childName][area]) {
+        for (const target in appData[childName][area][program]) {
+          if (appData[childName][area][program][target].active) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  // DOM references
+  const childNameSelect = document.getElementById("childNameSelect");
+  const contentAreaSelect = document.getElementById("contentAreaSelect");
+  const programSelect = document.getElementById("programSelect");
+  const targetSelect = document.getElementById("targetSelect");
+  const sdInput = document.getElementById("sdInput");
+  const notesArea = document.getElementById("notesArea");
+  const priorList = document.getElementById("priorList");
+
+  // Lock checkboxes + buttons
+  const lockChild = document.getElementById("lockChild");
+  const childLockBtn = document.getElementById("childLockBtn");
+  const lockContentArea = document.getElementById("lockContentArea");
+  const contentAreaBtn = document.getElementById("contentAreaBtn");
+  const lockProgram = document.getElementById("lockProgram");
+  const programBtn = document.getElementById("programBtn");
+  const lockTarget = document.getElementById("lockTarget");
+  const targetBtn = document.getElementById("targetBtn");
+
+  function populateChildNames() {
+    childNameSelect.innerHTML = "";
+    const validChildren = Object.keys(appData).filter(c => childHasActiveRecords(c));
+    validChildren.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      childNameSelect.appendChild(opt);
+    });
+    if (validChildren.length && !validChildren.includes(childNameSelect.value)) {
+      childNameSelect.value = validChildren[0];
+    }
+  }
+  populateChildNames();
+
+  function updateContentAreas() {
+    contentAreaSelect.innerHTML = "";
+    const selChild = childNameSelect.value;
+    if (appData[selChild]) {
+      Object.keys(appData[selChild]).forEach(area => {
+        const opt = document.createElement("option");
+        opt.value = area;
+        opt.textContent = area;
+        contentAreaSelect.appendChild(opt);
+      });
+    }
+  }
+  function updateProgramSelect() {
+    programSelect.innerHTML = "";
+    const selChild = childNameSelect.value;
+    const selArea = contentAreaSelect.value;
+    if (appData[selChild] && appData[selChild][selArea]) {
+      Object.keys(appData[selChild][selArea]).forEach(prog => {
+        const opt = document.createElement("option");
+        opt.value = prog;
+        opt.textContent = prog;
+        programSelect.appendChild(opt);
+      });
+    }
+  }
+  function updateTargetSelect() {
+    targetSelect.innerHTML = "";
+    const selChild = childNameSelect.value;
+    const selArea = contentAreaSelect.value;
+    const selProg = programSelect.value;
+    if (appData[selChild] && appData[selChild][selArea] && appData[selChild][selArea][selProg]) {
+      Object.keys(appData[selChild][selArea][selProg])
+        .filter(t => appData[selChild][selArea][selProg][t].active)
+        .forEach(t => {
+          const opt = document.createElement("option");
+          opt.value = t;
+          opt.textContent = t;
+          targetSelect.appendChild(opt);
+        });
+    }
+  }
+  function updateInstructions() {
+    const selChild = childNameSelect.value;
+    const selArea = contentAreaSelect.value;
+    const selProg = programSelect.value;
+    const selTarg = targetSelect.value;
+    if (appData[selChild] &&
+        appData[selChild][selArea] &&
+        appData[selChild][selArea][selProg] &&
+        appData[selChild][selArea][selProg][selTarg]) {
+      const rec = appData[selChild][selArea][selProg][selTarg];
+      sdInput.value = rec.sd;
+      notesArea.value = rec.note;
+    } else {
+      sdInput.value = "";
+      notesArea.value = "";
+    }
+  }
+  function updatePriorResults() {
+    const selChild = childNameSelect.value;
+    const selArea = contentAreaSelect.value;
+    const selProg = programSelect.value;
+    const selTarg = targetSelect.value;
+    const filtered = trialHistory.filter(r =>
+      r.child===selChild && r.contentArea===selArea && r.program===selProg && r.target===selTarg
+    );
+    const lastFive = filtered.slice(-5);
+    priorList.innerHTML = "";
+    for (let i=lastFive.length-1; i>=0; i--) {
+      const li = document.createElement("li");
+      const result = lastFive[i].result;
+      li.textContent = result.charAt(0).toUpperCase()+result.slice(1);
+      li.className = result;
+      priorList.appendChild(li);
+    }
+  }
+
+  // triggers on changes
+  childNameSelect.addEventListener('change', () => {
+    updateContentAreas();
+    updateProgramSelect();
+    updateTargetSelect();
+    updateInstructions();
+    updatePriorResults();
+  });
+  contentAreaSelect.addEventListener('change', () => {
+    updateProgramSelect();
+    updateTargetSelect();
+    updateInstructions();
+    updatePriorResults();
+  });
+  programSelect.addEventListener('change', () => {
+    updateTargetSelect();
+    updateInstructions();
+    updatePriorResults();
+  });
+  targetSelect.addEventListener('change', () => {
+    updateInstructions();
+    updatePriorResults();
+  });
+
+  updateContentAreas();
+  updateProgramSelect();
+  updateTargetSelect();
+  updateInstructions();
+  updatePriorResults();
+
+  // Lock/unlock logic
+  function setLockState(checkbox, btn, labelText) {
+    if (checkbox.checked) {
+      btn.textContent = labelText + " 🔒";
+      btn.classList.add("locked");
+      btn.classList.remove("unlocked");
+    } else {
+      btn.textContent = labelText + " 🔓";
+      btn.classList.add("unlocked");
+      btn.classList.remove("locked");
+    }
+  }
+  function toggleLock(checkbox, btn, labelText) {
+    checkbox.checked = !checkbox.checked;
+    setLockState(checkbox, btn, labelText);
+  }
+  childLockBtn.addEventListener('click', () => {
+    toggleLock(lockChild, childLockBtn, "Child Name");
+  });
+  contentAreaBtn.addEventListener('click', () => {
+    toggleLock(lockContentArea, contentAreaBtn, "Content Area");
+  });
+  programBtn.addEventListener('click', () => {
+    toggleLock(lockProgram, programBtn, "Program");
+  });
+  targetBtn.addEventListener('click', () => {
+    toggleLock(lockTarget, targetBtn, "Target");
+  });
+
+  setLockState(lockChild, childLockBtn, "Child Name");
+  setLockState(lockContentArea, contentAreaBtn, "Content Area");
+  setLockState(lockProgram, programBtn, "Program");
+  setLockState(lockTarget, targetBtn, "Target");
+
+  // Random selection
+  function randomizeTrialData() {
+    let rawLockChild = lockChild.checked;
+    let rawLockArea = lockContentArea.checked;
+    let rawLockProg = lockProgram.checked;
+    let rawLockTarg = lockTarget.checked;
+
+    let lockChildEff = rawLockChild || rawLockArea || rawLockProg || rawLockTarg;
+    let lockAreaEff = rawLockArea || rawLockProg || rawLockTarg;
+    let lockProgEff = rawLockProg || rawLockTarg;
+    let lockTargEff = rawLockTarg;
+
+    let c = childNameSelect.value;
+    let a = contentAreaSelect.value;
+    let p = programSelect.value;
+    let t = targetSelect.value;
+
+    if (!lockChildEff) {
+      const validKids = Object.keys(appData).filter(x => childHasActiveRecords(x));
+      if (validKids.length) {
+        c = validKids[Math.floor(Math.random()*validKids.length)];
+        childNameSelect.value = c;
+      }
+    }
+    if (!appData[c]) return;
+    let childData = appData[c];
+    const areaKeys = Object.keys(childData);
+    if (!lockAreaEff) {
+      if (areaKeys.length) {
+        a = areaKeys[Math.floor(Math.random()*areaKeys.length)];
+        contentAreaSelect.value = a;
+      }
+    } else {
+      if (!areaKeys.includes(a)) {
+        a = areaKeys[0];
+        contentAreaSelect.value = a;
+      }
+    }
+    updateProgramSelect();
+    const progKeys = Object.keys(childData[a]||{});
+    if (!lockProgEff) {
+      if (progKeys.length) {
+        p = progKeys[Math.floor(Math.random()*progKeys.length)];
+        programSelect.value = p;
+      }
+    } else {
+      if (!progKeys.includes(p)) {
+        p = progKeys[0];
+        programSelect.value = p;
+      }
+    }
+    updateTargetSelect();
+    const targKeys = Object.keys(childData[a][p]||{}).filter(xx=>childData[a][p][xx].active);
+    if (!lockTargEff) {
+      if (targKeys.length) {
+        t = targKeys[Math.floor(Math.random()*targKeys.length)];
+        targetSelect.value = t;
+      }
+    } else {
+      if (!targKeys.includes(t)) {
+        t = targKeys[0];
+        targetSelect.value = t;
+      }
+    }
+    updateInstructions();
+    updatePriorResults();
+  }
+  document.getElementById('selectRandomBtn').addEventListener('click', randomizeTrialData);
+
+  // Trial recording
+  function recordTrial(result) {
+    alert("Trial data recorded: " + result);
+    trialHistory.push({
+      child: childNameSelect.value,
+      contentArea: contentAreaSelect.value,
+      program: programSelect.value,
+      target: targetSelect.value,
+      result,
+      timestamp: new Date().toISOString()
+    });
+    updatePriorResults();
+    randomizeTrialData();
+    document.querySelectorAll('input[name="trialResult"]').forEach(r=>r.checked=false);
+  }
+  document.querySelectorAll('input[name="trialResult"]').forEach(radio=>{
+    radio.addEventListener('change', e=>recordTrial(e.target.value));
+  });
+
+  // Import Program CSV
+  const importProgramBtn = document.getElementById('importProgramBtn');
+  const csvFileInput = document.getElementById('csvFileInput');
+  importProgramBtn.addEventListener('click', ()=>csvFileInput.click());
+  csvFileInput.addEventListener('change', e=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const rdr = new FileReader();
+    rdr.onload = ev=>{
+      parseCSVImport(ev.target.result);
+      csvFileInput.value="";
+    };
+    rdr.readAsText(file);
+  });
+  function parseCSVImport(csvText) {
+    const lines = csvText.split(/\r?\n/);
+    if (lines.length<2) return alert("CSV file appears empty.");
+    const header = lines[0].split(",").map(h=>h.trim().toLowerCase());
+    const expected = ["child","content area","program","target","sd","note","active"];
+    if (header.join()!==expected.join()) {
+      return alert("CSV header mismatch. Expected: "+expected.join(", "));
+    }
+    for(let i=1;i<lines.length;i++){
+      const line = lines[i].trim();
+      if(!line) continue;
+      const fields = line.split(",").map(f=>f.trim());
+      if(fields.length<7) continue;
+      const [child, area, program, target, sd, note, activeStr] = fields;
+      const active = (activeStr.toLowerCase()==="true"||activeStr==="1");
+      if(!appData[child]) appData[child]={};
+      if(!appData[child][area]) appData[child][area]={};
+      if(!appData[child][area][program]) appData[child][area][program]={};
+      appData[child][area][program][target]={ sd, note, active };
+    }
+    saveAppData();
+    populateChildNames();
+    updateContentAreas();
+    updateProgramSelect();
+    updateTargetSelect();
+    updateInstructions();
+    updatePriorResults();
+    alert("CSV import successful.");
+  }
+
+  // Export Trial Data CSV
+  const exportTrialDataBtn = document.getElementById("exportTrialDataBtn");
+  exportTrialDataBtn.addEventListener("click", exportTrialData);
+  function exportTrialData(){
+    if(!trialHistory.length) {
+      alert("No trial data to export.");
+      return;
+    }
+    let header=["Child","Content Area","Program","Target","Result","Timestamp"];
+    let csv=header.join(",")+"\n";
+    trialHistory.forEach(r=>{
+      let row=[r.child,r.contentArea,r.program,r.target,r.result,r.timestamp];
+      csv += row.map(xx=>`"${xx}"`).join(",")+"\n";
+    });
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement("a");
+    link.href=url;
+    link.download="trial_data.csv";
+    link.style.display="none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  // Simple Edit Modal
+  const simpleEditModal = document.getElementById('simpleEditModal');
+  const closeSimpleEditModal = document.getElementById('closeSimpleEditModal');
+  const simpleEditForm = document.getElementById('simpleEditForm');
+
+  function updateChildDatalist() {
+    const d = document.getElementById('childList');
+    d.innerHTML="";
+    Object.keys(appData).forEach(k=>{
+      let opt=document.createElement('option');
+      opt.value=k;
+      d.appendChild(opt);
+    });
+  }
+  function updateContentAreaDatalist() {
+    const d = document.getElementById('contentAreaList');
+    d.innerHTML="";
+    const cval=document.getElementById('simpleEditChild').value;
+    if(appData[cval]) {
+      Object.keys(appData[cval]).forEach(area=>{
+        let opt=document.createElement('option');
+        opt.value=area;
+        d.appendChild(opt);
+      });
+    }
+  }
+  function updateProgramDatalist() {
+    const d=document.getElementById('programList');
+    d.innerHTML="";
+    const cval=document.getElementById('simpleEditChild').value;
+    const aval=document.getElementById('simpleEditContentArea').value;
+    if(appData[cval] && appData[cval][aval]) {
+      Object.keys(appData[cval][aval]).forEach(p=>{
+        let opt=document.createElement('option');
+        opt.value=p;
+        d.appendChild(opt);
+      });
+    }
+  }
+  function updateTargetDatalist() {
+    const d=document.getElementById('targetList');
+    d.innerHTML="";
+    const cval=document.getElementById('simpleEditChild').value;
+    const aval=document.getElementById('simpleEditContentArea').value;
+    const pval=document.getElementById('simpleEditProgram').value;
+    if(appData[cval]&&appData[cval][aval]&&appData[cval][aval][pval]) {
+      Object.keys(appData[cval][aval][pval]).forEach(t=>{
+        let opt=document.createElement('option');
+        opt.value=t;
+        d.appendChild(opt);
+      });
+    }
+  }
+  document.getElementById('simpleEditChild').addEventListener('input',updateContentAreaDatalist);
+  document.getElementById('simpleEditContentArea').addEventListener('input',updateProgramDatalist);
+  document.getElementById('simpleEditProgram').addEventListener('input',updateTargetDatalist);
+
+  function openSimpleEditModal(data, mode) {
+    document.getElementById('simpleEditMode').value=mode;
+    if(mode==="edit"){
+      document.getElementById('simpleModalTitle').textContent="Edit Record";
+      document.getElementById('simpleEditChild').value=data.child||"";
+      document.getElementById('simpleEditContentArea').value=data.area||"";
+      document.getElementById('simpleEditProgram').value=data.program||"";
+      document.getElementById('simpleEditTarget').value=data.target||"";
+      document.getElementById('simpleEditSD').value=data.sd||"";
+      document.getElementById('simpleEditNote').value=data.note||"";
+      document.getElementById('simpleEditActive').checked=(data.active===false?false:true);
+      document.getElementById('simpleOriginalChild').value=data.child||"";
+      document.getElementById('simpleOriginalArea').value=data.area||"";
+      document.getElementById('simpleOriginalProgram').value=data.program||"";
+      document.getElementById('simpleOriginalTarget').value=data.target||"";
+    } else {
+      document.getElementById('simpleModalTitle').textContent="Add New Record";
+      document.getElementById('simpleEditChild').value=childNameSelect.value;
+      document.getElementById('simpleEditContentArea').value="";
+      document.getElementById('simpleEditProgram').value="";
+      document.getElementById('simpleEditTarget').value="";
+      document.getElementById('simpleEditSD').value="";
+      document.getElementById('simpleEditNote').value="";
+      document.getElementById('simpleEditActive').checked=false;
+      document.getElementById('simpleOriginalChild').value="";
+      document.getElementById('simpleOriginalArea').value="";
+      document.getElementById('simpleOriginalProgram').value="";
+      document.getElementById('simpleOriginalTarget').value="";
+    }
+    updateChildDatalist();
+    updateContentAreaDatalist();
+    updateProgramDatalist();
+    updateTargetDatalist();
+    simpleEditModal.style.display="block";
+  }
+  function closeSimpleEditModalFunc(){
+    simpleEditModal.style.display="none";
+  }
+  closeSimpleEditModal.addEventListener('click', closeSimpleEditModalFunc);
+  document.getElementById('simpleCancelEditBtn').addEventListener('click', closeSimpleEditModalFunc);
+
+  simpleEditForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const mode=document.getElementById('simpleEditMode').value;
+    const newChild=document.getElementById('simpleEditChild').value.trim();
+    const newArea=document.getElementById('simpleEditContentArea').value.trim();
+    const newProg=document.getElementById('simpleEditProgram').value.trim();
+    const newTarg=document.getElementById('simpleEditTarget').value.trim();
+    const newSD=document.getElementById('simpleEditSD').value.trim();
+    const newNote=document.getElementById('simpleEditNote').value.trim();
+    const newActive=document.getElementById('simpleEditActive').checked;
+    if(!newChild||!newArea||!newProg||!newTarg||!newSD||!newNote){
+      alert("All fields are required.");
+      return;
+    }
+    if(mode==="edit"){
+      const oc=document.getElementById('simpleOriginalChild').value;
+      const oa=document.getElementById('simpleOriginalArea').value;
+      const op=document.getElementById('simpleOriginalProgram').value;
+      const ot=document.getElementById('simpleOriginalTarget').value;
+      if(oc && oa && op && ot){
+        delete appData[oc][oa][op][ot];
+        if(!Object.keys(appData[oc][oa][op]).length){
+          delete appData[oc][oa][op];
+          if(!Object.keys(appData[oc][oa]).length){
+            delete appData[oc][oa];
+            if(!Object.keys(appData[oc]).length){
+              delete appData[oc];
+            }
+          }
+        }
+      }
+    }
+    if(!appData[newChild]) appData[newChild]={};
+    if(!appData[newChild][newArea]) appData[newChild][newArea]={};
+    if(!appData[newChild][newArea][newProg]) appData[newChild][newArea][newProg]={};
+    if(mode==="add" && appData[newChild][newArea][newProg][newTarg]){
+      if(!confirm("Target already exists. Overwrite?"))return;
+    }
+    appData[newChild][newArea][newProg][newTarg]={
+      sd:newSD,
+      note:newNote,
+      active:newActive
+    };
+    closeSimpleEditModalFunc();
+    buildDataTable();
+    saveAppData();
+  });
+
+  document.getElementById('addNewRecordBtn').addEventListener('click', ()=>{
+    openSimpleEditModal({}, "add");
+  });
+
+  // Build data table
+  const dataTable=document.getElementById('dataTable');
+  function buildDataTable(){
+    let rows=[];
+    Object.keys(appData).forEach(child=>{
+      Object.keys(appData[child]).forEach(area=>{
+        Object.keys(appData[child][area]).forEach(prog=>{
+          Object.keys(appData[child][area][prog]).forEach(targ=>{
+            const rec=appData[child][area][prog][targ];
+            rows.push({
+              child,
+              contentArea:area,
+              program:prog,
+              target:targ,
+              sd:rec.sd,
+              note:rec.note,
+              active:rec.active
+            });
+          });
+        });
+      });
+    });
+
+    const cols=["Child","Active","Content Area","Program","Target","SD","Note","Action"];
+    let thead="<thead><tr>";
+    cols.forEach((c,i)=>{
+      if(c!=="Action"){
+        thead+=`<th data-col="${i}" class="sortable">${c}</th>`;
+      } else {
+        thead+=`<th>${c}</th>`;
+      }
+    });
+    thead+="</tr>";
+    // Filter row
+    thead+="<tr class='filterRow'>";
+    cols.forEach((c,i)=>{
+      if(c==="Active"||c==="Action"){
+        thead+="<th></th>";
+      } else {
+        thead+=`<th><input type="text" data-col="${i}" placeholder="Filter ${c}"/></th>`;
+      }
+    });
+    thead+="</tr></thead>";
+
+    let tbody="<tbody>";
+    rows.forEach(r=>{
+      tbody+="<tr>";
+      tbody+=`<td>${r.child}</td>`;
+      tbody+=`<td style="text-align:center"><input type="checkbox" class="activeCheckbox"
+        data-child="${r.child}" data-contentArea="${r.contentArea}"
+        data-program="${r.program}" data-target="${r.target}"
+        ${r.active?"checked":""}/></td>`;
+      tbody+=`<td>${r.contentArea}</td>`;
+      tbody+=`<td>${r.program}</td>`;
+      tbody+=`<td>${r.target}</td>`;
+      tbody+=`<td>${r.sd}</td>`;
+      tbody+=`<td>${r.note}</td>`;
+      tbody+=`<td><button class="tableEditBtn"
+        data-child="${r.child}" data-contentArea="${r.contentArea}"
+        data-program="${r.program}" data-target="${r.target}">Edit</button></td>`;
+      tbody+="</tr>";
+    });
+    tbody+="</tbody>";
+
+    dataTable.innerHTML=thead+tbody;
+    const sortables=dataTable.querySelectorAll("th.sortable");
+    sortables.forEach(header=>{
+      header.addEventListener('click',()=>{
+        const colIndex=header.getAttribute("data-col");
+        sortTable(colIndex);
+      });
+    });
+    const filters=dataTable.querySelectorAll("thead tr.filterRow input");
+    filters.forEach(f=>{
+      f.addEventListener('keyup',filterTable);
+    });
+    const editBtns=dataTable.querySelectorAll(".tableEditBtn");
+    editBtns.forEach(btn=>{
+      btn.addEventListener('click',function(){
+        const c=btn.getAttribute("data-child");
+        const a=btn.getAttribute("data-contentArea");
+        const p=btn.getAttribute("data-program");
+        const t=btn.getAttribute("data-target");
+        const rec=appData[c][a][p][t];
+        openSimpleEditModal({
+          child:c, area:a, program:p, target:t,
+          sd:rec.sd, note:rec.note, active:rec.active
+        },"edit");
+      });
+    });
+    const checkboxes=dataTable.querySelectorAll(".activeCheckbox");
+    checkboxes.forEach(chk=>{
+      chk.addEventListener('change',function(){
+        const c=chk.getAttribute("data-child");
+        const a=chk.getAttribute("data-contentArea");
+        const p=chk.getAttribute("data-program");
+        const t=chk.getAttribute("data-target");
+        appData[c][a][p][t].active=chk.checked;
+        saveAppData();
+        updateTargetSelect();
+        updateInstructions();
+        updatePriorResults();
+      });
+    });
+  }
+  function filterTable(){
+    const filters={};
+    const inputs=dataTable.querySelectorAll("thead tr.filterRow input");
+    inputs.forEach(i=>{
+      filters[parseInt(i.getAttribute("data-col"),10)] = i.value.toLowerCase();
+    });
+    const rows=dataTable.querySelector("tbody").querySelectorAll("tr");
+    rows.forEach(r=>{
+      let show=true;
+      for(const [colIndexStr,filVal] of Object.entries(filters)){
+        if(!filVal.trim()) continue;
+        const colIndex=parseInt(colIndexStr,10);
+        const cellText=r.children[colIndex].textContent.toLowerCase();
+        if(!cellText.includes(filVal)){
+          show=false;
+          break;
+        }
+      }
+      r.style.display= show?"":"none";
+    });
+  }
+  function sortTable(colIndex){
+    const tbody=dataTable.querySelector("tbody");
+    let rowArr=Array.from(tbody.querySelectorAll("tr"));
+    rowArr.sort((a,b)=>{
+      const aText=a.children[colIndex].textContent.toLowerCase();
+      const bText=b.children[colIndex].textContent.toLowerCase();
+      if(aText<bText)return -1*sortOrder;
+      if(aText>bText)return 1*sortOrder;
+      return 0;
+    });
+    sortOrder*=-1;
+    rowArr.forEach(rr=>tbody.appendChild(rr));
+  }
+
+  document.getElementById('toggleDataTableBtn').addEventListener('click',function(){
+    const cont=document.getElementById('dataTableContainer');
+    if(cont.style.display==="none"||!cont.style.display){
+      cont.style.display="block";
+      this.textContent="Hide Full Program";
+      buildDataTable();
+    } else {
+      cont.style.display="none";
+      this.textContent="Show Full Program";
+    }
+  });
+
+  // Reset
+  document.getElementById('resetDataBtn').addEventListener('click',()=>{
+    if(confirm("Reset all data to default?")){
       appData = getDefaultData();
       saveAppData();
-    }
-
-    /******** Helper: Check if a child has any active record ********/
-    function childHasActiveRecords(childName) {
-      if (!appData[childName]) return false;
-      for (const area in appData[childName]) {
-        for (const program in appData[childName][area]) {
-          for (const target in appData[childName][area][program]) {
-            if (appData[childName][area][program][target].active) {
-              return true;
-            }
-          }
-        }
-      }
-      return false;
-    }
-
-    /******** Elements for Main Interface ********/
-    const childNameSelect = document.getElementById("childNameSelect");
-    const contentAreaSelect = document.getElementById("contentAreaSelect");
-    const programSelect = document.getElementById("programSelect");
-    const targetSelect = document.getElementById("targetSelect");
-    const sdInput = document.getElementById("sdInput");
-    const notesArea = document.getElementById("notesArea");
-    const priorList = document.getElementById("priorList");
-
-    /* Lock checkboxes (hidden) */
-    const lockChild = document.getElementById("lockChild");
-    const lockContentArea = document.getElementById("lockContentArea");
-    const lockProgram = document.getElementById("lockProgram");
-    const lockTarget = document.getElementById("lockTarget");
-
-    /* Lock/Unlock buttons */
-    const childLockBtn = document.getElementById("childLockBtn");
-    const contentAreaBtn = document.getElementById("contentAreaBtn");
-    const programBtn = document.getElementById("programBtn");
-    const targetBtn = document.getElementById("targetBtn");
-
-    /******** Populate Child Names ********/
-    function populateChildNames() {
-      childNameSelect.innerHTML = "";
-      const validChildren = Object.keys(appData).filter(child => childHasActiveRecords(child));
-      validChildren.forEach(child => {
-        const opt = document.createElement("option");
-        opt.value = child;
-        opt.textContent = child;
-        childNameSelect.appendChild(opt);
-      });
-      if (!validChildren.includes(childNameSelect.value) && validChildren.length) {
-        childNameSelect.value = validChildren[0];
-      }
-    }
-
-    function updateContentAreas() {
-      const selectedChild = childNameSelect.value;
-      contentAreaSelect.innerHTML = "";
-      if (appData[selectedChild]) {
-        Object.keys(appData[selectedChild]).forEach(area => {
-          const opt = document.createElement("option");
-          opt.value = area;
-          opt.textContent = area;
-          contentAreaSelect.appendChild(opt);
-        });
-      }
-    }
-    function updateProgramSelect() {
-      const selectedChild = childNameSelect.value;
-      const selectedArea = contentAreaSelect.value;
-      programSelect.innerHTML = "";
-      if (appData[selectedChild] && appData[selectedChild][selectedArea]) {
-        Object.keys(appData[selectedChild][selectedArea]).forEach(prog => {
-          const opt = document.createElement("option");
-          opt.value = prog;
-          opt.textContent = prog;
-          programSelect.appendChild(opt);
-        });
-      }
-    }
-    function updateTargetSelect() {
-      const selectedChild = childNameSelect.value;
-      const selectedArea = contentAreaSelect.value;
-      const selectedProgram = programSelect.value;
-      targetSelect.innerHTML = "";
-      if (appData[selectedChild] &&
-          appData[selectedChild][selectedArea] &&
-          appData[selectedChild][selectedArea][selectedProgram]) {
-        Object.keys(appData[selectedChild][selectedArea][selectedProgram])
-          .filter(target => appData[selectedChild][selectedArea][selectedProgram][target].active)
-          .forEach(target => {
-            const opt = document.createElement("option");
-            opt.value = target;
-            opt.textContent = target;
-            targetSelect.appendChild(opt);
-          });
-      }
-    }
-
-    function updateInstructions() {
-      const selectedChild = childNameSelect.value;
-      const selectedArea = contentAreaSelect.value;
-      const selectedProgram = programSelect.value;
-      const selectedTarget = targetSelect.value;
-      if (appData[selectedChild] &&
-          appData[selectedChild][selectedArea] &&
-          appData[selectedChild][selectedArea][selectedProgram] &&
-          appData[selectedChild][selectedArea][selectedProgram][selectedTarget]) {
-        const rec = appData[selectedChild][selectedArea][selectedProgram][selectedTarget];
-        sdInput.value = rec.sd;
-        notesArea.value = rec.note;
-      } else {
-        sdInput.value = "";
-        notesArea.value = "";
-      }
-    }
-    function updatePriorResults() {
-      const selectedChild = childNameSelect.value;
-      const currentArea = contentAreaSelect.value;
-      const currentProgram = programSelect.value;
-      const currentTarget = targetSelect.value;
-      const filtered = trialHistory.filter(item =>
-        item.child === selectedChild &&
-        item.contentArea === currentArea &&
-        item.program === currentProgram &&
-        item.target === currentTarget
-      );
-      const lastFive = filtered.slice(-5);
-      priorList.innerHTML = "";
-      for (let i = lastFive.length - 1; i >= 0; i--) {
-        const li = document.createElement("li");
-        li.textContent = 
-          lastFive[i].result.charAt(0).toUpperCase() + lastFive[i].result.slice(1);
-        li.className = lastFive[i].result;
-        priorList.appendChild(li);
-      }
-    }
-
-    childNameSelect.addEventListener('change', () => {
+      populateChildNames();
       updateContentAreas();
       updateProgramSelect();
       updateTargetSelect();
       updateInstructions();
       updatePriorResults();
-    });
-    contentAreaSelect.addEventListener('change', () => {
-      updateProgramSelect();
-      updateTargetSelect();
-      updateInstructions();
-      updatePriorResults();
-    });
-    programSelect.addEventListener('change', () => {
-      updateTargetSelect();
-      updateInstructions();
-      updatePriorResults();
-    });
-    targetSelect.addEventListener('change', () => {
-      updateInstructions();
-      updatePriorResults();
-    });
+      alert("Data has been reset.");
+      if(document.getElementById('dataTableContainer').style.display!=="none"){
+        buildDataTable();
+      }
+    }
+  });
 
+  /*******************************************************************************
+   *   PROGRAM BUILDER LOGIC
+   ******************************************************************************/
+  let programLibrary;
+  if(localStorage.getItem('abaLibrary')){
+    programLibrary=JSON.parse(localStorage.getItem('abaLibrary'));
+  } else {
+    // sample library
+    programLibrary=[
+      {domain:'Social',program:'Program A',target:'Target 1',SD:'SD A1'},
+      {domain:'Social',program:'Program A',target:'Target 2',SD:'SD A2'},
+      {domain:'Social',program:'Program B',target:'Target 3',SD:'SD B1'},
+      {domain:'Cognitive',program:'Program C',target:'Target 4',SD:'SD C1'}
+    ];
+    localStorage.setItem('abaLibrary',JSON.stringify(programLibrary));
+  }
+
+  let builderChildName="";
+  let builderSelectedDomain="";
+  let builderSelections=[]; // array of { domain, programs: [{program, targets:[]}] }
+  let builderEditingProgram=null;
+
+  // show/hide program builder
+  const programBuilderSection=document.getElementById('programBuilderSection');
+  const toggleProgramBuilderBtn=document.getElementById('toggleProgramBuilderBtn');
+  toggleProgramBuilderBtn.addEventListener('click',()=>{
+    // Toggle the .hidden class
+    if(programBuilderSection.classList.contains('hidden')){
+      programBuilderSection.classList.remove('hidden');
+    } else {
+      programBuilderSection.classList.add('hidden');
+    }
+  });
+
+  // library import
+  const builderImportLibraryBtn=document.getElementById('builderImportLibraryBtn');
+  const builderImportFile=document.getElementById('builderImportFile');
+  builderImportLibraryBtn.addEventListener('click',()=>{
+    builderImportFile.click();
+  });
+  builderImportFile.addEventListener('change',function(event){
+    const file=event.target.files[0];
+    if(!file)return;
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const contents=e.target.result;
+      const parsed=parseBuilderCSV(contents);
+      if(parsed){
+        programLibrary=parsed;
+        localStorage.setItem('abaLibrary',JSON.stringify(programLibrary));
+        alert("Library updated!");
+        if(!document.getElementById('builderStep2').classList.contains('hidden')){
+          populateDomainSelect();
+        }
+      } else {
+        alert("Failed to parse CSV. Must have domain, program, target, SD as header.");
+      }
+    };
+    reader.readAsText(file);
+  });
+  function parseBuilderCSV(text){
+    const lines=text.split(/\r?\n/);
+    if(lines.length<2)return null;
+    const hdr=lines[0].split(',').map(x=>x.trim().toLowerCase());
+    const exp=['domain','program','target','sd'];
+    for(let i=0;i<exp.length;i++){
+      if(hdr[i]!==exp[i])return null;
+    }
+    let data=[];
+    for(let i=1;i<lines.length;i++){
+      if(!lines[i].trim())continue;
+      const vals=lines[i].split(',').map(v=>v.trim());
+      if(vals.length<4)continue;
+      data.push({domain:vals[0],program:vals[1],target:vals[2],SD:vals[3]});
+    }
+    return data;
+  }
+
+  // builder summary
+  function updateBuilderSummary(){
+    const c=document.getElementById('builderSummaryContent');
+    c.innerHTML="";
+    if(!builderSelections.length){
+      c.innerHTML="<em>No selections yet.</em>";
+      return;
+    }
+    builderSelections.forEach((domSel,dIndex)=>{
+      const domDiv=document.createElement('div');
+      domDiv.className='summaryDomain';
+      let totTargs=domSel.programs.reduce((acc,p)=>acc+p.targets.length,0);
+      const h4=document.createElement('h4');
+      h4.textContent=`${domSel.domain}: ${domSel.programs.length} program(s), ${totTargs} target(s)`;
+      domDiv.appendChild(h4);
+
+      domSel.programs.forEach((pObj,pIndex)=>{
+        const prDiv=document.createElement('div');
+        prDiv.className='summaryProgram';
+        prDiv.textContent=`${pObj.program} (${pObj.targets.length} target(s)) `;
+
+        const remBtn=document.createElement('button');
+        remBtn.textContent="Remove";
+        remBtn.addEventListener('click',()=>{
+          builderRemoveProgram(dIndex,pIndex);
+        });
+        prDiv.appendChild(remBtn);
+
+        const edtBtn=document.createElement('button');
+        edtBtn.textContent="Edit";
+        edtBtn.addEventListener('click',()=>{
+          editProgramFromSummary(dIndex,pIndex);
+        });
+        prDiv.appendChild(edtBtn);
+
+        domDiv.appendChild(prDiv);
+      });
+      c.appendChild(domDiv);
+    });
+  }
+  function builderRemoveProgram(dIndex,pIndex){
+    builderSelections[dIndex].programs.splice(pIndex,1);
+    if(!builderSelections[dIndex].programs.length){
+      builderSelections.splice(dIndex,1);
+    }
+    updateBuilderSummary();
+  }
+
+  // step 1 -> step 2
+  document.getElementById('builderNext1').addEventListener('click',()=>{
+    builderChildName=document.getElementById('builderChildName').value.trim();
+    if(!builderChildName){
+      alert("Please enter a child's name.");
+      return;
+    }
+    document.getElementById('builderStep1').classList.add('hidden');
+    document.getElementById('builderStep2').classList.remove('hidden');
+    populateDomainSelect();
+  });
+  function populateDomainSelect(){
+    const sel=document.getElementById('builderDomainSelect');
+    sel.innerHTML='<option value="">-- Select Domain --</option>';
+    const uniqueDomains=[...new Set(programLibrary.map(x=>x.domain))];
+    uniqueDomains.forEach(d=>{
+      let opt=document.createElement('option');
+      opt.value=d;
+      opt.textContent=d;
+      sel.appendChild(opt);
+    });
+  }
+
+  // step 2 -> step 3
+  document.getElementById('builderNext2').addEventListener('click',()=>{
+    builderSelectedDomain=document.getElementById('builderDomainSelect').value;
+    if(!builderSelectedDomain){
+      alert("Please select a domain.");
+      return;
+    }
+    document.getElementById('builderStep2').classList.add('hidden');
+    document.getElementById('builderStep3').classList.remove('hidden');
+    document.getElementById('builderCurrentDomainLabel').textContent=builderSelectedDomain;
+    updateBuilderStep3Buttons();
+    populateProgramsAndTargets(builderSelectedDomain);
+  });
+  function updateBuilderStep3Buttons(){
+    const addBtn=document.getElementById('builderAddDomainBtn');
+    const canBtn=document.getElementById('builderCancelDomainBtn');
+    if(builderEditingProgram){
+      addBtn.textContent="Save Changes";
+      canBtn.textContent="Cancel Editing";
+    } else {
+      addBtn.textContent="Save Domain";
+      canBtn.textContent="Cancel This Domain";
+    }
+  }
+  function populateProgramsAndTargets(dom){
+    const container=document.getElementById('programsContainer');
+    container.innerHTML="";
+    let programNames;
+    if(builderEditingProgram){
+      programNames=[builderEditingProgram.program];
+    } else {
+      programNames=[...new Set(programLibrary.filter(r=>r.domain===dom).map(r=>r.program))];
+    }
+    programNames.forEach(prg=>{
+      const progDiv=document.createElement('div');
+      progDiv.className='programItem';
+      progDiv.dataset.program=prg;
+
+      const headerDiv=document.createElement('div');
+      headerDiv.className='programHeader';
+
+      const toggleBtn=document.createElement('button');
+      toggleBtn.type='button';
+      toggleBtn.className='toggleTargetsBtn';
+      toggleBtn.textContent='Show All';
+      headerDiv.appendChild(toggleBtn);
+
+      const progLabel=document.createElement('span');
+      progLabel.className='programLabel';
+      progLabel.textContent=prg;
+      headerDiv.appendChild(progLabel);
+
+      const statusSpan=document.createElement('span');
+      statusSpan.className='programStatus inactive';
+      statusSpan.textContent='Inactive';
+      headerDiv.appendChild(statusSpan);
+
+      progDiv.appendChild(headerDiv);
+
+      const targDiv=document.createElement('div');
+      targDiv.className='targetsContainer hidden';
+      const targets=[...new Set(programLibrary.filter(r=>r.domain===dom&&r.program===prg).map(x=>x.target))];
+      targets.forEach(t=>{
+        const lbl=document.createElement('label');
+        lbl.style.display='block';
+        const cb=document.createElement('input');
+        cb.type='checkbox';
+        cb.className='targetCheckbox';
+        cb.value=t;
+        if(builderEditingProgram && builderEditingProgram.program===prg){
+          if(builderEditingProgram.targets.includes(t)){
+            cb.checked=true;
+          }
+        }
+        cb.addEventListener('change',()=>updateProgStatus(progDiv));
+        lbl.appendChild(cb);
+        lbl.appendChild(document.createTextNode(" "+t));
+        targDiv.appendChild(lbl);
+      });
+      progDiv.appendChild(targDiv);
+
+      toggleBtn.addEventListener('click',()=>{
+        if(targDiv.classList.contains('hidden')){
+          targDiv.classList.remove('hidden');
+          toggleBtn.textContent='Hide';
+        } else {
+          targDiv.classList.add('hidden');
+          toggleBtn.textContent='Show All';
+        }
+      });
+      container.appendChild(progDiv);
+      updateProgStatus(progDiv);
+    });
+  }
+  function updateProgStatus(pDiv){
+    const st=pDiv.querySelector('.programStatus');
+    const cbs=pDiv.querySelectorAll('.targetCheckbox');
+    const any=Array.from(cbs).some(x=>x.checked);
+    if(any){
+      st.textContent='Active';
+      st.classList.add('active');
+      st.classList.remove('inactive');
+    } else {
+      st.textContent='Inactive';
+      st.classList.remove('active');
+      st.classList.add('inactive');
+    }
+  }
+
+  document.getElementById('builderCancelDomainBtn').addEventListener('click',()=>{
+    if(builderEditingProgram) {
+      builderEditingProgram=null;
+    }
+    resetBuilderStep3();
+  });
+  function resetBuilderStep3(){
+    builderSelectedDomain="";
+    document.getElementById('programsContainer').innerHTML="";
+    document.getElementById('builderDomainSelect').value="";
+    document.getElementById('builderStep3').classList.add('hidden');
+    document.getElementById('builderStep2').classList.remove('hidden');
+    updateBuilderStep3Buttons();
+  }
+
+  document.getElementById('builderAddDomainBtn').addEventListener('click',()=>{
+    const domainSel=gatherCurrentDomainSelection();
+    if(!domainSel)return;
+    if(builderEditingProgram){
+      let found=builderSelections.find(d=>d.domain===builderSelectedDomain);
+      if(found){
+        found.programs.push(domainSel.programs[0]);
+      } else {
+        builderSelections.push(domainSel);
+      }
+      builderEditingProgram=null;
+    } else {
+      builderSelections.push(domainSel);
+    }
+    updateBuilderSummary();
+    resetBuilderStep3();
+    checkFinishButtonVisibility();
+  });
+  function gatherCurrentDomainSelection(){
+    const c=document.getElementById('programsContainer');
+    const items=c.querySelectorAll('.programItem');
+    const domObj={ domain: builderSelectedDomain, programs:[] };
+    let anySelected=false;
+    items.forEach(item=>{
+      const pName=item.dataset.program;
+      const cbs=item.querySelectorAll('.targetCheckbox:checked');
+      if(cbs.length>0){
+        anySelected=true;
+        const targets=Array.from(cbs).map(cb=>cb.value);
+        domObj.programs.push({ program:pName, targets });
+      }
+    });
+    if(!anySelected){
+      alert("Please select at least one target in this domain.");
+      return null;
+    }
+    return domObj;
+  }
+
+  function editProgramFromSummary(dIndex,pIndex){
+    const domEntry=builderSelections[dIndex];
+    const progEntry=domEntry.programs[pIndex];
+    domEntry.programs.splice(pIndex,1);
+    if(!domEntry.programs.length){
+      builderSelections.splice(dIndex,1);
+    }
+    updateBuilderSummary();
+    builderEditingProgram={
+      domain:domEntry.domain,
+      program:progEntry.program,
+      targets:progEntry.targets
+    };
+    builderSelectedDomain=domEntry.domain;
+    document.getElementById('builderStep2').classList.add('hidden');
+    document.getElementById('builderStep3').classList.remove('hidden');
+    document.getElementById('builderCurrentDomainLabel').textContent=domEntry.domain;
+    updateBuilderStep3Buttons();
+    populateProgramsAndTargets(domEntry.domain);
+  }
+  function checkFinishButtonVisibility(){
+    const finishBtn=document.getElementById('builderFinishBtn');
+    if(builderSelections.length>0) finishBtn.classList.remove('hidden');
+    else finishBtn.classList.add('hidden');
+  }
+
+  // finish => add data to main app
+  document.getElementById('builderFinishBtn').addEventListener('click',()=>{
+    if(!builderSelections.length){
+      alert("No programs/targets selected.");
+      return;
+    }
+    // add to appData
+    if(!appData[builderChildName]){
+      appData[builderChildName]={};
+    }
+    builderSelections.forEach(domSel=>{
+      const domain=domSel.domain;
+      if(!appData[builderChildName][domain]){
+        appData[builderChildName][domain]={};
+      }
+      domSel.programs.forEach(pr=>{
+        if(!appData[builderChildName][domain][pr.program]){
+          appData[builderChildName][domain][pr.program]={};
+        }
+        pr.targets.forEach(t=>{
+          const row=programLibrary.find(r=>
+            r.domain===domSel.domain && r.program===pr.program && r.target===t
+          );
+          const sdVal=row?row.SD:"(No SD found)";
+          appData[builderChildName][domain][pr.program][t]={ sd:sdVal, note:"", active:true };
+        });
+      });
+    });
+    saveAppData();
+    alert("Program data added for child: "+builderChildName);
+
+    // Clear
+    builderSelections=[];
+    builderChildName="";
+    builderSelectedDomain="";
+    builderEditingProgram=null;
+    updateBuilderSummary();
+    checkFinishButtonVisibility();
+
+    // Refresh main UI
     populateChildNames();
     updateContentAreas();
     updateProgramSelect();
@@ -781,593 +1896,9 @@
     updateInstructions();
     updatePriorResults();
 
-    /******** Lock/Unlock Buttons ********/
-    function setLockState(checkbox, button, labelText) {
-      if (checkbox.checked) {
-        // LOCKED
-        button.textContent = labelText + " 🔒";
-        button.classList.add("locked");
-        button.classList.remove("unlocked");
-      } else {
-        // UNLOCKED
-        button.textContent = labelText + " 🔓";
-        button.classList.add("unlocked");
-        button.classList.remove("locked");
-      }
-    }
-
-    function toggleLock(checkbox, button, labelText) {
-      checkbox.checked = !checkbox.checked;
-      setLockState(checkbox, button, labelText);
-    }
-
-    // Child Lock
-    childLockBtn.addEventListener("click", () => {
-      toggleLock(lockChild, childLockBtn, "Child Name");
-    });
-    // Content Area Lock
-    contentAreaBtn.addEventListener("click", () => {
-      toggleLock(lockContentArea, contentAreaBtn, "Content Area");
-    });
-    // Program Lock
-    programBtn.addEventListener("click", () => {
-      toggleLock(lockProgram, programBtn, "Program");
-    });
-    // Target Lock
-    targetBtn.addEventListener("click", () => {
-      toggleLock(lockTarget, targetBtn, "Target");
-    });
-
-    // Initialize the lock button states
-    setLockState(lockChild, childLockBtn, "Child Name");
-    setLockState(lockContentArea, contentAreaBtn, "Content Area");
-    setLockState(lockProgram, programBtn, "Program");
-    setLockState(lockTarget, targetBtn, "Target");
-
-    /******** Randomization Functionality ********/
-    function randomizeTrialData() {
-      let rawLockChild = lockChild.checked;
-      let rawLockContentArea = lockContentArea.checked;
-      let rawLockProgram = lockProgram.checked;
-      let rawLockTarget = lockTarget.checked;
-
-      let lockChildEff = rawLockChild || rawLockContentArea || rawLockProgram || rawLockTarget;
-      let lockContentAreaEff = rawLockContentArea || rawLockProgram || rawLockTarget;
-      let lockProgramEff = rawLockProgram || rawLockTarget;
-      let lockTargetEff = rawLockTarget;
-
-      let currentChild = childNameSelect.value;
-      let currentArea = contentAreaSelect.value;
-      let currentProgram = programSelect.value;
-      let currentTarget = targetSelect.value;
-
-      if (!lockChildEff) {
-        const validChildren = Object.keys(appData).filter(child => childHasActiveRecords(child));
-        if (validChildren.length > 0) {
-          currentChild = validChildren[Math.floor(Math.random() * validChildren.length)];
-          childNameSelect.value = currentChild;
-        }
-      }
-      if (!appData[currentChild]) return;
-      const childData = appData[currentChild];
-
-      const availableAreas = Object.keys(childData);
-      if (!lockContentAreaEff) {
-        if (availableAreas.length > 0) {
-          currentArea = availableAreas[Math.floor(Math.random() * availableAreas.length)];
-          contentAreaSelect.value = currentArea;
-        }
-      } else {
-        if (!availableAreas.includes(currentArea)) {
-          currentArea = availableAreas[0];
-          contentAreaSelect.value = currentArea;
-        }
-      }
-      updateProgramSelect();
-
-      const availablePrograms = Object.keys(childData[currentArea] || {});
-      if (!lockProgramEff) {
-        if (availablePrograms.length > 0) {
-          currentProgram = availablePrograms[Math.floor(Math.random() * availablePrograms.length)];
-          programSelect.value = currentProgram;
-        }
-      } else {
-        if (!availablePrograms.includes(currentProgram)) {
-          currentProgram = availablePrograms[0];
-          programSelect.value = currentProgram;
-        }
-      }
-      updateTargetSelect();
-
-      const availableTargets = Object.keys(childData[currentArea][currentProgram] || {})
-        .filter(t => childData[currentArea][currentProgram][t].active);
-      if (!lockTargetEff) {
-        if (availableTargets.length > 0) {
-          currentTarget = availableTargets[Math.floor(Math.random() * availableTargets.length)];
-          targetSelect.value = currentTarget;
-        }
-      } else {
-        if (!availableTargets.includes(currentTarget)) {
-          currentTarget = availableTargets[0];
-          targetSelect.value = currentTarget;
-        }
-      }
-
-      updateInstructions();
-      updatePriorResults();
-    }
-    document.getElementById('selectRandomBtn').addEventListener('click', randomizeTrialData);
-
-    /******** Trial Data Recording ********/
-    function clearTrialSelection() {
-      document.querySelectorAll('input[name="trialResult"]').forEach(radio => {
-        radio.checked = false;
-      });
-    }
-    function recordTrial(result) {
-      alert("Trial data recorded: " + result);
-      const record = {
-        child: childNameSelect.value,
-        contentArea: contentAreaSelect.value,
-        program: programSelect.value,
-        target: targetSelect.value,
-        result: result,
-        timestamp: new Date().toISOString()
-      };
-      trialHistory.push(record);
-      updatePriorResults();
-      randomizeTrialData();
-      clearTrialSelection();
-    }
-    document.querySelectorAll('input[name="trialResult"]').forEach(radio => {
-      radio.addEventListener('change', e => { recordTrial(e.target.value); });
-    });
-
-    /******** CSV Import Functionality ********/
-    const importProgramBtn = document.getElementById('importProgramBtn');
-    const csvFileInput = document.getElementById('csvFileInput');
-    importProgramBtn.addEventListener('click', () => { csvFileInput.click(); });
-    csvFileInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const text = e.target.result;
-        parseCSVImport(text);
-        csvFileInput.value = "";
-      };
-      reader.readAsText(file);
-    });
-    function parseCSVImport(csvText) {
-      const lines = csvText.split(/\r?\n/);
-      if (lines.length < 2) return alert("CSV file appears empty.");
-      const header = lines[0].split(",").map(h => h.trim().toLowerCase());
-      const expected = ["child", "content area", "program", "target", "sd", "note", "active"];
-      if (header.join() !== expected.join()) {
-        return alert("CSV header does not match expected format. Expected: " + expected.join(", "));
-      }
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-        const fields = line.split(",").map(f => f.trim());
-        if (fields.length < 7) continue;
-        const [child, area, program, target, sd, note, activeStr] = fields;
-        const active = (activeStr.toLowerCase() === "true" || activeStr === "1");
-        if (!appData[child]) { appData[child] = {}; }
-        if (!appData[child][area]) { appData[child][area] = {}; }
-        if (!appData[child][area][program]) { appData[child][area][program] = {}; }
-        appData[child][area][program][target] = { sd: sd, note: note, active: active };
-      }
-      saveAppData();
-      populateChildNames();
-      updateContentAreas();
-      updateProgramSelect();
-      updateTargetSelect();
-      updateInstructions();
-      updatePriorResults();
-      alert("CSV import successful.");
-    }
-
-    /******** Export Trial Data as CSV ********/
-    const exportTrialDataBtn = document.getElementById("exportTrialDataBtn");
-    exportTrialDataBtn.addEventListener("click", exportTrialData);
-    function exportTrialData() {
-      if (trialHistory.length === 0) {
-        alert("No trial data to export.");
-        return;
-      }
-      const header = ["Child", "Content Area", "Program", "Target", "Result", "Timestamp"];
-      let csvContent = header.join(",") + "\n";
-      trialHistory.forEach(record => {
-        const row = [
-          record.child,
-          record.contentArea,
-          record.program,
-          record.target,
-          record.result,
-          record.timestamp
-        ];
-        csvContent += row.map(v => `"${v}"`).join(",") + "\n";
-      });
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "trial_data.csv";
-      a.style.display = "none";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    /******** Simple Edit Modal (for adding/editing records) ********/
-    const simpleEditModal = document.getElementById('simpleEditModal');
-    const closeSimpleEditModal = document.getElementById('closeSimpleEditModal');
-    const simpleEditForm = document.getElementById('simpleEditForm');
-    const simpleModalTitle = document.getElementById('simpleModalTitle');
-    const simpleEditChild = document.getElementById('simpleEditChild');
-    const simpleEditContentArea = document.getElementById('simpleEditContentArea');
-    const simpleEditProgram = document.getElementById('simpleEditProgram');
-    const simpleEditTarget = document.getElementById('simpleEditTarget');
-    const simpleEditSD = document.getElementById('simpleEditSD');
-    const simpleEditNote = document.getElementById('simpleEditNote');
-    const simpleEditActive = document.getElementById('simpleEditActive');
-    const simpleOriginalChild = document.getElementById('simpleOriginalChild');
-    const simpleOriginalArea = document.getElementById('simpleOriginalArea');
-    const simpleOriginalProgram = document.getElementById('simpleOriginalProgram');
-    const simpleOriginalTarget = document.getElementById('simpleOriginalTarget');
-
-    function updateChildDatalist() {
-      const datalist = document.getElementById('childList');
-      datalist.innerHTML = "";
-      Object.keys(appData).forEach(child => {
-        const option = document.createElement('option');
-        option.value = child;
-        datalist.appendChild(option);
-      });
-    }
-    function updateContentAreaDatalist() {
-      const datalist = document.getElementById('contentAreaList');
-      datalist.innerHTML = "";
-      const childVal = simpleEditChild.value;
-      if (appData[childVal]) {
-        Object.keys(appData[childVal]).forEach(area => {
-          const option = document.createElement('option');
-          option.value = area;
-          datalist.appendChild(option);
-        });
-      }
-    }
-    function updateProgramDatalist() {
-      const datalist = document.getElementById('programList');
-      datalist.innerHTML = "";
-      const childVal = simpleEditChild.value;
-      const areaVal = simpleEditContentArea.value;
-      if (appData[childVal] && appData[childVal][areaVal]) {
-        Object.keys(appData[childVal][areaVal]).forEach(prog => {
-          const option = document.createElement('option');
-          option.value = prog;
-          datalist.appendChild(option);
-        });
-      }
-    }
-    function updateTargetDatalist() {
-      const datalist = document.getElementById('targetList');
-      datalist.innerHTML = "";
-      const childVal = simpleEditChild.value;
-      const areaVal = simpleEditContentArea.value;
-      const progVal = simpleEditProgram.value;
-      if (appData[childVal] && appData[childVal][areaVal] && appData[childVal][areaVal][progVal]) {
-        Object.keys(appData[childVal][areaVal][progVal]).forEach(targ => {
-          const option = document.createElement('option');
-          option.value = targ;
-          datalist.appendChild(option);
-        });
-      }
-    }
-    simpleEditChild.addEventListener('input', updateContentAreaDatalist);
-    simpleEditContentArea.addEventListener('input', updateProgramDatalist);
-    simpleEditProgram.addEventListener('input', updateTargetDatalist);
-
-    function openSimpleEditModal(data, mode) {
-      document.getElementById('simpleEditMode').value = mode;
-      if (mode === "edit") {
-        simpleModalTitle.textContent = "Edit Record";
-        simpleEditChild.value = data.child || "";
-        simpleEditContentArea.value = data.area || "";
-        simpleEditProgram.value = data.program || "";
-        simpleEditTarget.value = data.target || "";
-        simpleEditSD.value = data.sd || "";
-        simpleEditNote.value = data.note || "";
-        simpleEditActive.checked = (data.active === false ? false : true);
-        simpleOriginalChild.value = data.child || "";
-        simpleOriginalArea.value = data.area || "";
-        simpleOriginalProgram.value = data.program || "";
-        simpleOriginalTarget.value = data.target || "";
-      } else if (mode === "add") {
-        simpleModalTitle.textContent = "Add New Record";
-        simpleEditChild.value = childNameSelect.value;
-        simpleEditContentArea.value = "";
-        simpleEditProgram.value = "";
-        simpleEditTarget.value = "";
-        simpleEditSD.value = "";
-        simpleEditNote.value = "";
-        simpleEditActive.checked = false;
-        simpleOriginalChild.value = "";
-        simpleOriginalArea.value = "";
-        simpleOriginalProgram.value = "";
-        simpleOriginalTarget.value = "";
-      }
-      updateChildDatalist();
-      updateContentAreaDatalist();
-      updateProgramDatalist();
-      updateTargetDatalist();
-      simpleEditModal.style.display = "block";
-    }
-    function closeSimpleEditModalFunc() { simpleEditModal.style.display = "none"; }
-    document.getElementById('closeSimpleEditModal').addEventListener('click', closeSimpleEditModalFunc);
-    document.getElementById('simpleCancelEditBtn').addEventListener('click', closeSimpleEditModalFunc);
-
-    simpleEditForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const mode = document.getElementById('simpleEditMode').value;
-      const newChild = simpleEditChild.value.trim();
-      const newArea = simpleEditContentArea.value.trim();
-      const newProg = simpleEditProgram.value.trim();
-      const newTarget = simpleEditTarget.value.trim();
-      const newSD = simpleEditSD.value.trim();
-      const newNote = simpleEditNote.value.trim();
-      const newActive = simpleEditActive.checked;
-
-      if (!newChild || !newArea || !newProg || !newTarget || !newSD || !newNote) {
-        alert("All fields are required.");
-        return;
-      }
-
-      if (mode === "edit") {
-        const origChild = document.getElementById('simpleOriginalChild').value;
-        const origArea = document.getElementById('simpleOriginalArea').value;
-        const origProg = document.getElementById('simpleOriginalProgram').value;
-        const origTarget = document.getElementById('simpleOriginalTarget').value;
-        if (origChild && origArea && origProg && origTarget) {
-          delete appData[origChild][origArea][origProg][origTarget];
-          if (Object.keys(appData[origChild][origArea][origProg]).length === 0) {
-            delete appData[origChild][origArea][origProg];
-            if (Object.keys(appData[origChild][origArea]).length === 0) {
-              delete appData[origChild][origArea];
-              if (Object.keys(appData[origChild]).length === 0) {
-                delete appData[origChild];
-              }
-            }
-          }
-        }
-      }
-      if (!appData[newChild]) { appData[newChild] = {}; }
-      if (!appData[newChild][newArea]) { appData[newChild][newArea] = {}; }
-      if (!appData[newChild][newArea][newProg]) { appData[newChild][newArea][newProg] = {}; }
-
-      if (mode === "add" && appData[newChild][newArea][newProg][newTarget]) {
-        if (!confirm("Target already exists. Overwrite?")) { return; }
-      }
-      appData[newChild][newArea][newProg][newTarget] = { sd: newSD, note: newNote, active: newActive };
-      closeSimpleEditModalFunc();
-      buildDataTable();
-
-      if (childNameSelect.value === document.getElementById('simpleOriginalChild').value &&
-          contentAreaSelect.value === document.getElementById('simpleOriginalArea').value &&
-          programSelect.value === document.getElementById('simpleOriginalProgram').value &&
-          targetSelect.value === document.getElementById('simpleOriginalTarget').value) {
-        childNameSelect.value = newChild;
-        updateContentAreas();
-        contentAreaSelect.value = newArea;
-        updateProgramSelect();
-        programSelect.value = newProg;
-        updateTargetSelect();
-        targetSelect.value = newTarget;
-        updateInstructions();
-        updatePriorResults();
-      }
-      saveAppData();
-    });
-
-    document.getElementById('addNewRecordBtn').addEventListener('click', function() {
-      openSimpleEditModal({}, "add");
-    });
-
-    /******** Data Management: Table View ********/
-    const dataTable = document.getElementById("dataTable");
-    function buildDataTable() {
-      let rows = [];
-      Object.keys(appData).forEach(child => {
-        Object.keys(appData[child]).forEach(area => {
-          Object.keys(appData[child][area]).forEach(prog => {
-            Object.keys(appData[child][area][prog]).forEach(targ => {
-              const rec = appData[child][area][prog][targ];
-              rows.push({
-                child: child,
-                contentArea: area,
-                program: prog,
-                target: targ,
-                sd: rec.sd,
-                note: rec.note,
-                active: rec.active
-              });
-            });
-          });
-        });
-      });
-
-      const columns = ["Child", "Active", "Content Area", "Program", "Target", "SD", "Note", "Action"];
-      let thead = "<thead><tr>";
-      columns.forEach((col, index) => {
-        if (col !== "Action") {
-          thead += `<th data-col="${index}" class="sortable">${col}</th>`;
-        } else {
-          thead += `<th>${col}</th>`;
-        }
-      });
-      thead += "</tr>";
-
-      // Filter row
-      thead += "<tr class='filterRow'>";
-      columns.forEach((col, index) => {
-        if (col === "Active" || col === "Action") {
-          thead += "<th></th>";
-        } else {
-          thead += `<th><input type="text" data-col="${index}" placeholder="Filter ${col}" /></th>`;
-        }
-      });
-      thead += "</tr></thead>";
-
-      let tbody = "<tbody>";
-      rows.forEach(row => {
-        tbody += "<tr>";
-        tbody += `<td>${row.child}</td>`;
-        tbody += `<td style="text-align: center;">
-                    <input type="checkbox" class="activeCheckbox" 
-                           data-child="${row.child}" 
-                           data-contentArea="${row.contentArea}" 
-                           data-program="${row.program}" 
-                           data-target="${row.target}" 
-                           ${row.active ? "checked" : ""} />
-                  </td>`;
-        tbody += `<td>${row.contentArea}</td>`;
-        tbody += `<td>${row.program}</td>`;
-        tbody += `<td>${row.target}</td>`;
-        tbody += `<td>${row.sd}</td>`;
-        tbody += `<td>${row.note}</td>`;
-        tbody += `<td><button class="tableEditBtn" 
-                           data-child="${row.child}" 
-                           data-contentArea="${row.contentArea}" 
-                           data-program="${row.program}" 
-                           data-target="${row.target}">Edit</button></td>`;
-        tbody += "</tr>";
-      });
-      tbody += "</tbody>";
-
-      dataTable.innerHTML = thead + tbody;
-
-      const sortableHeaders = dataTable.querySelectorAll("th.sortable");
-      sortableHeaders.forEach(header => {
-        header.addEventListener("click", () => {
-          const colIndex = header.getAttribute("data-col");
-          sortTable(colIndex);
-        });
-      });
-
-      const filterInputs = dataTable.querySelectorAll("thead tr.filterRow input");
-      filterInputs.forEach(input => {
-        input.addEventListener("keyup", filterTable);
-      });
-
-      const editButtons = dataTable.querySelectorAll(".tableEditBtn");
-      editButtons.forEach(btn => {
-        btn.addEventListener("click", function() {
-          const child = btn.getAttribute("data-child");
-          const area = btn.getAttribute("data-contentArea");
-          const prog = btn.getAttribute("data-program");
-          const targ = btn.getAttribute("data-target");
-          const rec = appData[child][area][prog][targ];
-          openSimpleEditModal({
-            child, area, program: prog, target: targ,
-            sd: rec.sd, note: rec.note, active: rec.active
-          }, "edit");
-        });
-      });
-
-      const activeCheckboxes = dataTable.querySelectorAll(".activeCheckbox");
-      activeCheckboxes.forEach(chk => {
-        chk.addEventListener("change", function() {
-          const child = chk.getAttribute("data-child");
-          const area = chk.getAttribute("data-contentArea");
-          const prog = chk.getAttribute("data-program");
-          const targ = chk.getAttribute("data-target");
-          appData[child][area][prog][targ].active = chk.checked;
-          updateTargetSelect();
-          updateInstructions();
-          updatePriorResults();
-          saveAppData();
-        });
-      });
-    }
-
-    function filterTable() {
-      const filters = {};
-      const inputs = dataTable.querySelectorAll("thead tr.filterRow input");
-      inputs.forEach(input => {
-        const colIndex = parseInt(input.getAttribute("data-col"), 10);
-        filters[colIndex] = input.value.toLowerCase();
-      });
-
-      const tbody = dataTable.querySelector("tbody");
-      const rows = tbody.querySelectorAll("tr");
-      rows.forEach(row => {
-        let show = true;
-        for (const [colIndexString, filterValue] of Object.entries(filters)) {
-          if (filterValue.trim() === "") continue;
-          const colIndex = parseInt(colIndexString, 10);
-          const cellText = row.children[colIndex].textContent.toLowerCase();
-          if (!cellText.includes(filterValue)) {
-            show = false;
-            break;
-          }
-        }
-        row.style.display = show ? "" : "none";
-      });
-    }
-
-    function sortTable(colIndex) {
-      const tbody = dataTable.querySelector("tbody");
-      const rows = Array.from(tbody.querySelectorAll("tr"));
-      rows.sort((a, b) => {
-        const aText = a.children[colIndex].textContent.toLowerCase();
-        const bText = b.children[colIndex].textContent.toLowerCase();
-        if (aText < bText) return -1 * sortOrder;
-        if (aText > bText) return 1 * sortOrder;
-        return 0;
-      });
-      sortOrder *= -1;
-      rows.forEach(row => tbody.appendChild(row));
-    }
-
-    document.getElementById('toggleDataTableBtn').addEventListener("click", function() {
-      const container = document.getElementById('dataTableContainer');
-      if (container.style.display === "none" || container.style.display === "") {
-        container.style.display = "block";
-        this.textContent = "Hide Full Program";
-        buildDataTable();
-      } else {
-        container.style.display = "none";
-        this.textContent = "Show Full Program";
-      }
-    });
-
-    /******** RESET DATA BUTTON ********/
-    const resetDataBtn = document.getElementById('resetDataBtn');
-    resetDataBtn.addEventListener('click', () => {
-      if (!confirm("Are you sure? All data will be deleted and replaced with the default Test Child data.")) return;
-      appData = getDefaultData();
-      trialHistory = [];
-      saveAppData();
-
-      populateChildNames();
-      updateContentAreas();
-      updateProgramSelect();
-      updateTargetSelect();
-      updateInstructions();
-      updatePriorResults();
-      buildDataTable();
-      alert("Data has been reset to default.");
-    });
-
-    /******** Close modal if click outside ********/
-    const simpleEditModalContainer = document.getElementById('simpleEditModal');
-    window.addEventListener('click', function(e) {
-      if (e.target == simpleEditModalContainer) {
-        closeSimpleEditModalFunc();
-      }
-    });
+    // Hide again
+    programBuilderSection.classList.add('hidden');
+  });
   </script>
 </body>
 </html>
