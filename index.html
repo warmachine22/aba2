@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>ABA Data Collector + Program Builder (Wide Dropdowns Restored)</title>
+  <title>ABA Data Collector + Program Builder (with Cancel at Each Step)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <!-- Google Font (Optional) -->
@@ -110,7 +110,7 @@
       gap: 0.5rem;
       margin-bottom: 0.5rem;
     }
-    /* Force the selects in .dropdown-row to expand horizontally */
+    /* Force the selects to be wide */
     .dropdown-row select {
       flex: 1;
       min-width: 200px;
@@ -473,7 +473,6 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      margin-top: 10px;
       margin-right: 5px;
       background-color: #007bff;
       color: #fff;
@@ -553,6 +552,15 @@
       color: #fff;
       border: none;
       cursor: pointer;
+    }
+    /* Additional step button rows for Cancel */
+    .builder-button-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 10px;
+    }
+    .builder-button-row button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -761,7 +769,7 @@
   <datalist id="targetList"></datalist>
 
   <!-- ========================================================= -->
-  <!-- PROGRAM BUILDER SECTION (Initially Hidden) -->
+  <!-- PROGRAM BUILDER SECTION (Initially Hidden, now with Cancel) -->
   <!-- ========================================================= -->
   <div id="programBuilderSection" class="hidden">
     <h2>Program Builder Wizard</h2>
@@ -783,7 +791,10 @@
     <div id="builderStep1" class="builder-step">
       <h3>Step 1: Enter Child's Name</h3>
       <input type="text" id="builderChildName" placeholder="Child's Name">
-      <button id="builderNext1">Next</button>
+      <div class="builder-button-row">
+        <button id="builderCancelAllBtn1">Cancel</button>
+        <button id="builderNext1">Next</button>
+      </div>
     </div>
 
     <!-- Step 2: Select Domain -->
@@ -792,25 +803,32 @@
       <select id="builderDomainSelect">
         <option value="">-- Select Domain --</option>
       </select>
-      <button id="builderNext2">Next</button>
+      <div class="builder-button-row">
+        <button id="builderCancelAllBtn2">Cancel</button>
+        <button id="builderNext2">Next</button>
+      </div>
     </div>
 
     <!-- Step 3: Pick Programs & Targets -->
     <div id="builderStep3" class="builder-step hidden">
       <h3>Step 3: Select Programs & Targets for <span id="builderCurrentDomainLabel"></span></h3>
       <div id="programsContainer"></div>
-      <button id="builderCancelDomainBtn">Cancel This Domain</button>
-      <button id="builderAddDomainBtn">Save Domain</button>
+      <div class="builder-button-row">
+        <button id="builderCancelAllBtn3">Cancel</button>
+        <button id="builderAddDomainBtn">Save Domain</button>
+      </div>
     </div>
 
     <!-- Final Finish Button -->
-    <button
-      id="builderFinishBtn"
-      class="hidden"
-      style="background-color: #28a745;"
-    >
-      Finish & Add to Main App
-    </button>
+    <div class="builder-button-row">
+      <button
+        id="builderFinishBtn"
+        class="hidden"
+        style="background-color: #28a745;"
+      >
+        Finish & Add to Main App
+      </button>
+    </div>
   </div>
 
   <!-- Place ALL scripts at the end so they can access all elements -->
@@ -1535,7 +1553,7 @@
       {domain:'Social',program:'Program B',target:'Target 3',SD:'SD B1'},
       {domain:'Cognitive',program:'Program C',target:'Target 4',SD:'SD C1'}
     ];
-    localStorage.setItem('abaLibrary',JSON.stringify(programLibrary));
+    localStorage.setItem('abaLibrary', JSON.stringify(programLibrary));
   }
 
   let builderChildName="";
@@ -1547,13 +1565,36 @@
   const programBuilderSection=document.getElementById('programBuilderSection');
   const toggleProgramBuilderBtn=document.getElementById('toggleProgramBuilderBtn');
   toggleProgramBuilderBtn.addEventListener('click',()=>{
-    // Toggle the .hidden class
     if(programBuilderSection.classList.contains('hidden')){
       programBuilderSection.classList.remove('hidden');
     } else {
       programBuilderSection.classList.add('hidden');
     }
   });
+
+  // Master Cancel to revert to default
+  function cancelProgramBuilder() {
+    // Clear all builder states
+    builderChildName="";
+    builderSelectedDomain="";
+    builderSelections=[];
+    builderEditingProgram=null;
+    updateBuilderSummary();
+    checkFinishButtonVisibility();
+
+    // Reset step display
+    document.getElementById('builderStep1').classList.remove('hidden');
+    document.getElementById('builderStep2').classList.add('hidden');
+    document.getElementById('builderStep3').classList.add('hidden');
+
+    // Hide the entire Program Builder section
+    programBuilderSection.classList.add('hidden');
+  }
+
+  // Attach the universal cancel function to each step's Cancel button
+  document.getElementById('builderCancelAllBtn1').addEventListener('click', cancelProgramBuilder);
+  document.getElementById('builderCancelAllBtn2').addEventListener('click', cancelProgramBuilder);
+  document.getElementById('builderCancelAllBtn3').addEventListener('click', cancelProgramBuilder);
 
   // library import
   const builderImportLibraryBtn=document.getElementById('builderImportLibraryBtn');
@@ -1685,13 +1726,10 @@
   });
   function updateBuilderStep3Buttons(){
     const addBtn=document.getElementById('builderAddDomainBtn');
-    const canBtn=document.getElementById('builderCancelDomainBtn');
     if(builderEditingProgram){
       addBtn.textContent="Save Changes";
-      canBtn.textContent="Cancel Editing";
     } else {
       addBtn.textContent="Save Domain";
-      canBtn.textContent="Cancel This Domain";
     }
   }
   function populateProgramsAndTargets(dom){
@@ -1779,21 +1817,6 @@
     }
   }
 
-  document.getElementById('builderCancelDomainBtn').addEventListener('click',()=>{
-    if(builderEditingProgram) {
-      builderEditingProgram=null;
-    }
-    resetBuilderStep3();
-  });
-  function resetBuilderStep3(){
-    builderSelectedDomain="";
-    document.getElementById('programsContainer').innerHTML="";
-    document.getElementById('builderDomainSelect').value="";
-    document.getElementById('builderStep3').classList.add('hidden');
-    document.getElementById('builderStep2').classList.remove('hidden');
-    updateBuilderStep3Buttons();
-  }
-
   document.getElementById('builderAddDomainBtn').addEventListener('click',()=>{
     const domainSel=gatherCurrentDomainSelection();
     if(!domainSel)return;
@@ -1809,7 +1832,7 @@
       builderSelections.push(domainSel);
     }
     updateBuilderSummary();
-    resetBuilderStep3();
+    // after saving domain, remain on step 3 so user can see or select more programs if desired
     checkFinishButtonVisibility();
   });
   function gatherCurrentDomainSelection(){
